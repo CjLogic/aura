@@ -1,2 +1,2 @@
 echo "Enable fast shutdown"
-source $OMARCHY_PATH/install/config/fast-shutdown.sh 
+source $AURA_PATH/install/config/fast-shutdown.sh

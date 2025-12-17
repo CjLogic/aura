@@ -1,0 +1,4 @@
+#!/bin/bash
+
+aura-refresh-config hypr/hyprsunset.conf
+aura-restart-hyprsunset

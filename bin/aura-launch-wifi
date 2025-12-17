@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rfkill unblock wifi
+aura-launch-or-focus-tui impala

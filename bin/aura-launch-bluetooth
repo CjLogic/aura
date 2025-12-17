@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rfkill unblock bluetooth
+exec aura-launch-or-focus-tui bluetui

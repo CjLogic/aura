@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Ensure walker is set to autostart
+mkdir -p ~/.config/autostart/
+cp $AURA_PATH/autostart/walker.desktop ~/.config/autostart/
+systemctl --user daemon-reload
+
+aura-refresh-config walker/config.toml
+aura-refresh-config elephant/calc.toml
+aura-refresh-config elephant/desktopapplications.toml
+aura-restart-walker

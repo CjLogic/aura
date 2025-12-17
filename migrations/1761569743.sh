@@ -6,4 +6,4 @@ else
   mkdir -p ~/.config/imv
 fi
 
-cp ~/.local/share/omarchy/config/imv/config ~/.config/imv/config
+cp ~/.local/share/aura/config/imv/config ~/.config/imv/config

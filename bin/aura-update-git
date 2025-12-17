@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+echo -e "\e[32mUpdate Aura\e[0m"
+
+git -C $AURA_PATH pull --autostash
+git -C $AURA_PATH diff --check || git -C $AURA_PATH reset --merge

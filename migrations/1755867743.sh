@@ -1,4 +1,4 @@
-echo "Copy Omarchy logo to ~/.config/omarchy/branding/screensaver.txt so screensaver can be personalized"
+echo "Copy Aura logo to ~/.config/aura/branding/screensaver.txt so screensaver can be personalized"
 
-mkdir -p ~/.config/omarchy/branding
-cp $OMARCHY_PATH/logo.txt ~/.config/omarchy/branding/screensaver.txt
+mkdir -p ~/.config/aura/branding
+cp $AURA_PATH/logo.txt ~/.config/aura/branding/screensaver.txt

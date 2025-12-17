@@ -1,4 +1,4 @@
-echo -e "Offer new Omarchy hotkeys\n"
+echo -e "Offer new Aura hotkeys\n"
 
 cat <<EOF
 * Add SUPER + C / V for unified clipboard in both terminal and other apps
@@ -21,6 +21,6 @@ if gum confirm "Switch to new hotkeys?"; then
   sed -i 's/SUPER CTRL,/SUPER SHIFT CTRL,/g' ~/.config/hypr/bindings.conf
   sed -i 's/SUPER SHIFT ALT, G, Google Messages/SUPER SHIFT CTRL, G, Google Messages/g' ~/.config/hypr/bindings.conf
 
-  sed -i 's|source = ~/.local/share/omarchy/default/hypr/bindings/tiling\.conf|source = ~/.local/share/omarchy/default/hypr/bindings/clipboard.conf\
-source = ~/.local/share/omarchy/default/hypr/bindings/tiling-v2.conf|' ~/.config/hypr/hyprland.conf
+  sed -i 's|source = ~/.local/share/aura/default/hypr/bindings/tiling\.conf|source = ~/.local/share/aura/default/hypr/bindings/clipboard.conf\
+source = ~/.local/share/aura/default/hypr/bindings/tiling-v2.conf|' ~/.config/hypr/hyprland.conf
 fi

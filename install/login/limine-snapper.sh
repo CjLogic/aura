@@ -30,7 +30,7 @@ EOF
   CMDLINE=$(grep "^[[:space:]]*cmdline:" "$limine_config" | head -1 | sed 's/^[[:space:]]*cmdline:[[:space:]]*//')
 
   sudo tee /etc/default/limine <<EOF >/dev/null
-TARGET_OS_NAME="Omarchy"
+TARGET_OS_NAME="Aura"
 
 ESP_PATH="/boot"
 
@@ -62,7 +62,7 @@ EOF
 ### Read more at config document: https://github.com/limine-bootloader/limine/blob/trunk/CONFIG.md
 #timeout: 3
 default_entry: 2
-interface_branding: Omarchy Bootloader
+interface_branding: Aura Bootloader
 interface_branding_color: 2
 hash_mismatch_panic: no
 
@@ -143,7 +143,7 @@ fi
 #     sudo efibootmgr --create \
 #       --disk "$(findmnt -n -o SOURCE /boot | sed 's/p\?[0-9]*$//')" \
 #       --part "$(findmnt -n -o SOURCE /boot | grep -o 'p\?[0-9]*$' | sed 's/^p//')" \
-#       --label "Omarchy" \
+#       --label "Aura" \
 #       --loader "\\EFI\\Linux\\$uki_file"
 #   fi
 # fi

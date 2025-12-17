@@ -1,0 +1,2 @@
+#!/bin/bash
+cat $AURA_PATH/version

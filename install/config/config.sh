@@ -1,6 +1,6 @@
-# Copy over Omarchy configs
+# Copy over Aura configs
 mkdir -p ~/.config
 cp -R ~/.local/share/aura/config/* ~/.config/
 
-# Use default bashrc from Omarchy
+# Use default bashrc from Aura
 cp ~/.local/share/aura/default/bashrc ~/.bashrc

@@ -1,3 +1,3 @@
-echo "Use new Omarchy mirror as default"
+echo "Use new Aura mirror as default"
 
-omarchy-refresh-pacman
+aura-refresh-pacman

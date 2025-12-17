@@ -1,6 +1,6 @@
-echo "Change to omarchy-nvim package"
-omarchy-pkg-drop omarchy-lazyvim
-omarchy-pkg-add omarchy-nvim
+echo "Change to aura-nvim package"
+aura-pkg-drop aura-lazyvim
+aura-pkg-add aura-nvim
 
 # Will trigger to overwrite configs or not to pickup new hot-reload themes
-omarchy-nvim-setup
+aura-nvim-setup

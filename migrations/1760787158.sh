@@ -1,3 +1,3 @@
 echo "Update Waybar styles for better spacing between icons"
 
-omarchy-refresh-config waybar/style.css
+aura-refresh-config waybar/style.css

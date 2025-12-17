@@ -58,7 +58,7 @@ start_install_log() {
 
   export AURA_START_TIME=$(date '+%Y-%m-%d %H:%M:%S')
 
-  echo "=== Omarchy Installation Started: $AURA_START_TIME ===" >>"$AURA_INSTALL_LOG_FILE"
+  echo "=== Aura Installation Started: $AURA_START_TIME ===" >>"$AURA_INSTALL_LOG_FILE"
   start_log_output
 }
 
@@ -68,7 +68,7 @@ stop_install_log() {
 
   if [[ -n ${AURA_INSTALL_LOG_FILE:-} ]]; then
     AURA_END_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "=== Omarchy Installation Completed: $AURA_END_TIME ===" >>"$AURA_INSTALL_LOG_FILE"
+    echo "=== Aura Installation Completed: $AURA_END_TIME ===" >>"$AURA_INSTALL_LOG_FILE"
     echo "" >>"$AURA_INSTALL_LOG_FILE"
     echo "=== Installation Time Summary ===" >>"$AURA_INSTALL_LOG_FILE"
 
@@ -96,7 +96,7 @@ stop_install_log() {
       AURA_MINS=$((AURA_DURATION / 60))
       AURA_SECS=$((AURA_DURATION % 60))
 
-      echo "Omarchy:     ${AURA_MINS}m ${AURA_SECS}s" >>"$AURA_INSTALL_LOG_FILE"
+      echo "Aura:     ${AURA_MINS}m ${AURA_SECS}s" >>"$AURA_INSTALL_LOG_FILE"
 
       if [ -n "$ARCH_DURATION" ]; then
         TOTAL_DURATION=$((ARCH_DURATION + AURA_DURATION))

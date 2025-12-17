@@ -1,3 +1,3 @@
 echo "Install Copy URL extension for Brave"
 
-omarchy-refresh-config brave-flags.conf
+aura-refresh-config brave-flags.conf
