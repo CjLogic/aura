@@ -7,7 +7,7 @@ User=$USER
 Session=hyprland-uwsm
 
 [Theme]
-Current=breeze
+Current=aura
 EOF
 fi
 
