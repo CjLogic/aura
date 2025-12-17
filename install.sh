@@ -3,16 +3,16 @@
 # Exit immediately if a command exits with a non-zero status
 set -eEo pipefail
 
-# Define Omarchy locations
-export OMARCHY_PATH="$HOME/.local/share/omarchy"
-export OMARCHY_INSTALL="$OMARCHY_PATH/install"
-export OMARCHY_INSTALL_LOG_FILE="/var/log/omarchy-install.log"
-export PATH="$OMARCHY_PATH/bin:$PATH"
+# Define Aura locations
+export AURA_PATH="$HOME/.local/share/aura"
+export AURA_INSTALL="$AURA_PATH/install"
+export AURA_INSTALL_LOG_FILE="/var/log/aura-install.log"
+export PATH="$AURA_PATH/bin:$PATH"
 
 # Install
-source "$OMARCHY_INSTALL/helpers/all.sh"
-source "$OMARCHY_INSTALL/preflight/all.sh"
-source "$OMARCHY_INSTALL/packaging/all.sh"
-source "$OMARCHY_INSTALL/config/all.sh"
-source "$OMARCHY_INSTALL/login/all.sh"
-source "$OMARCHY_INSTALL/post-install/all.sh"
+source "$AURA_INSTALL/helpers/all.sh"
+source "$AURA_INSTALL/preflight/all.sh"
+source "$AURA_INSTALL/packaging/all.sh"
+source "$AURA_INSTALL/config/all.sh"
+source "$AURA_INSTALL/login/all.sh"
+source "$AURA_INSTALL/post-install/all.sh"

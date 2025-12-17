@@ -1,0 +1,162 @@
+# Aura core package list - dev tools + Caelestia essentials
+# This file is used by the ISO builder when determining needs
+
+# === Shell & Terminal ===
+fish
+foot
+starship
+bash-completion
+
+# === System utilities ===
+bat
+btop
+dust
+eza
+fastfetch
+fd
+fzf
+gum
+less
+man-db
+plocate
+ripgrep
+tldr
+tree-sitter-cli
+unzip
+whois
+zoxide
+inxi
+usage
+jq
+xmlstarlet
+
+# === Dev Tools - Version Managers ===
+mise
+
+# === Dev Tools - Containers ===
+docker
+docker-buildx
+docker-compose
+lazydocker
+
+# === Dev Tools - Git ===
+lazygit
+github-cli
+
+# === Dev Tools - Languages ===
+ruby
+rust
+clang
+llvm
+luarocks
+python-poetry-core
+
+# === Dev Tools - Databases ===
+postgresql-libs
+mariadb-libs
+
+# === Dev Tools - Editors ===
+nvim
+
+# === Hyprland Desktop Environment ===
+hyprland
+hyprland-guiutils
+hyprland-preview-share-picker
+hypridle
+hyprlock
+hyprpicker
+hyprsunset
+waybar
+swaybg
+swayosd
+mako
+wofi
+walker
+grim
+slurp
+satty
+wayfreeze
+wl-clipboard
+cliphist
+imagemagick
+
+# === Display Protocols ===
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+xdg-terminal-exec
+qt5-wayland
+qt6-wayland
+
+# === Audio ===
+wireplumber
+pamixer
+playerctl
+
+# === Networking ===
+iwd
+avahi
+nss-mdns
+localsend
+
+# === System Services ===
+greetd
+greetd-tuigreet
+polkit-gnome
+gnome-keyring
+libsecret
+power-profiles-daemon
+uwsm
+
+# === Fonts ===
+noto-fonts
+noto-fonts-cjk
+noto-fonts-emoji
+noto-fonts-extra
+ttf-jetbrains-mono-nerd
+ttf-cascadia-mono-nerd
+woff2-font-awesome
+fontconfig
+
+# === Themes & Icons ===
+adw-gtk-theme
+papirus-icon-theme
+gnome-themes-extra
+qt5ct-kde
+qt6ct-kde
+
+# === File Management ===
+thunar
+gvfs-mtp
+gvfs-nfs
+gvfs-smb
+gnome-disk-utility
+trash-cli
+exfatprogs
+ffmpegthumbnailer
+
+# === Security ===
+ufw
+ufw-docker
+
+# === Boot & System ===
+plymouth
+brightnessctl
+tzupdate
+wireless-regdb
+
+# === Caelestia Dependencies ===
+caelestia-cli
+caelestia-shell
+app2unit
+inotify-tools
+direnv
+
+# === Build Tools ===
+yay
+base-devel
+
+# === System Libraries ===
+libyaml
+python-gobject
+bolt
+expac

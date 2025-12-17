@@ -1,7 +1,7 @@
 if command -v limine &>/dev/null; then
   sudo pacman -S --noconfirm --needed limine-snapper-sync limine-mkinitcpio-hook
 
-  sudo tee /etc/mkinitcpio.conf.d/omarchy_hooks.conf <<EOF >/dev/null
+  sudo tee /etc/mkinitcpio.conf.d/aura_hooks.conf <<EOF >/dev/null
 HOOKS=(base udev plymouth keyboard autodetect microcode modconf kms keymap consolefont block encrypt filesystems fsck btrfs-overlayfs)
 EOF
   sudo tee /etc/mkinitcpio.conf.d/thunderbolt_module.conf <<EOF >/dev/null
@@ -38,7 +38,7 @@ KERNEL_CMDLINE[default]="$CMDLINE"
 KERNEL_CMDLINE[default]+="quiet splash"
 
 ENABLE_UKI=yes
-CUSTOM_UKI_NAME="omarchy"
+CUSTOM_UKI_NAME="aura"
 
 ENABLE_LIMINE_FALLBACK=yes
 
@@ -87,7 +87,7 @@ EOF
 
 
   # Match Snapper configs if not installing from the ISO
-  if [[ -z ${OMARCHY_CHROOT_INSTALL:-} ]]; then
+  if [[ -z ${AURA_CHROOT_INSTALL:-} ]]; then
     if ! sudo snapper list-configs 2>/dev/null | grep -q "root"; then
       sudo snapper -c root create-config /
     fi
@@ -137,7 +137,7 @@ fi
 #   ! cat /sys/class/dmi/id/bios_vendor 2>/dev/null | grep -qi "American Megatrends" &&
 #   ! cat /sys/class/dmi/id/bios_vendor 2>/dev/null | grep -qi "Apple"; then
 #
-#   uki_file=$(find /boot/EFI/Linux/ -name "omarchy*.efi" -printf "%f\n" 2>/dev/null | head -1)
+#   uki_file=$(find /boot/EFI/Linux/ -name "aura*.efi" -printf "%f\n" 2>/dev/null | head -1)
 #
 #   if [[ -n "$uki_file" ]]; then
 #     sudo efibootmgr --create \
