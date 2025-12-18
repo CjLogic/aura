@@ -10,7 +10,7 @@ if [[ -n ${AURA_ONLINE_INSTALL:-} ]]; then
   sudo pacman-key --lsign-key 40DFB630FF42BCFFB047046CF0134EE680CAC571
 
   sudo pacman -Sy
-  sudo pacman -S --noconfirm --needed aura-keyring
+  sudo pacman -S --noconfirm --needed omarchy-keyring
 
 
   # Refresh all repos
