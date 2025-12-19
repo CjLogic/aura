@@ -56,7 +56,8 @@ postgresql-libs
 mariadb-libs
 
 # === Dev Tools - Editors ===
-nvim
+code
+micro
 
 # === Hyprland Desktop Environment ===
 hyprland
@@ -99,9 +100,9 @@ nss-mdns
 localsend
 
 # === System Services ===
-greetd
-greetd-tuigreet
+sddm
 polkit-gnome
+hyprpolkitagent
 gnome-keyring
 libsecret
 power-profiles-daemon
@@ -121,8 +122,8 @@ fontconfig
 adw-gtk-theme
 papirus-icon-theme
 gnome-themes-extra
-qt5ct-kde
-qt6ct-kde
+# qt5ct-kde  # AUR - installed via packaging/caelestia.sh
+# qt6ct-kde  # AUR - installed via packaging/caelestia.sh
 
 # === File Management ===
 thunar
@@ -145,9 +146,9 @@ tzupdate
 wireless-regdb
 
 # === Caelestia Dependencies ===
-caelestia-cli
-caelestia-shell
-app2unit
+# caelestia-cli     # AUR - installed via packaging/caelestia.sh
+# caelestia-shell   # AUR - installed via packaging/caelestia.sh
+# app2unit          # AUR - installed via packaging/caelestia.sh
 inotify-tools
 direnv
 

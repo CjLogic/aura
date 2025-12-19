@@ -36,6 +36,7 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
     "${KERNEL_HEADERS}"
     "${NVIDIA_DRIVER_PACKAGE}"
     "nvidia-utils"
+    "nvidia-settings"
     "lib32-nvidia-utils"
     "egl-wayland"
     "libva-nvidia-driver" # For VA-API hardware acceleration
@@ -46,7 +47,8 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
   sudo pacman -S --needed --noconfirm "${PACKAGES_TO_INSTALL[@]}"
 
   # Configure modprobe for early KMS
-  echo "options nvidia_drm modeset=1" | sudo tee /etc/modprobe.d/nvidia.conf >/dev/null
+  log "Configuring modprobe..."
+  echo "options nvidia_drm modeset=1 fbdev=1" | sudo tee /etc/modprobe.d/nvidia.conf >/dev/null
 
   # Configure mkinitcpio for early loading
   MKINITCPIO_CONF="/etc/mkinitcpio.conf"
@@ -64,17 +66,32 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
   # Clean up potential double spaces
   sudo sed -i -E 's/  +/ /g' "$MKINITCPIO_CONF"
 
+  log "Regenerating initramfs..."
   sudo mkinitcpio -P
 
-  # Add NVIDIA environment variables to hyprland.conf
-  HYPRLAND_CONF="$HOME/.config/hypr/hyprland.conf"
-  if [ -f "$HYPRLAND_CONF" ]; then
-    cat >>"$HYPRLAND_CONF" <<'EOF'
+  # Configure Limine bootloader kernel parameters
+  LIMINE_CFG="/boot/limine.cfg"
+  if [ -f "$LIMINE_CFG" ]; then
+    log "Updating Limine bootloader configuration..."
+    # Add nvidia_drm.modeset=1 to kernel command line if not already present
+    if ! grep -q "nvidia_drm.modeset=1" "$LIMINE_CFG"; then
+      sudo sed -i 's/\(CMDLINE=.*\)/\1 nvidia_drm.modeset=1/' "$LIMINE_CFG"
+      sudo sed -i 's/\(KERNEL_CMDLINE=.*\)/\1 nvidia_drm.modeset=1/' "$LIMINE_CFG"
+    fi
+  fi
+
+  # Add NVIDIA environment variables to Hyprland env.conf
+  HYPRLAND_ENV_CONF="$HOME/.config/hypr/hyprland/env.conf"
+  mkdir -p "$(dirname "$HYPRLAND_ENV_CONF")"
+
+  log "Configuring Hyprland environment variables..."
+  cat >>"$HYPRLAND_ENV_CONF" <<'EOF'
 
 # NVIDIA environment variables
-env = NVD_BACKEND,direct
 env = LIBVA_DRIVER_NAME,nvidia
+env = GBM_BACKEND,nvidia-drm
 env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 EOF
-  fi
+
+  log "NVIDIA setup complete!"
 fi
