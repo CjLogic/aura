@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# Install Aura desktop environment (Caelestia-based with Aura customizations)
+echo "Installing Aura desktop environment..."
+
+# Ensure fish is installed (required for install.fish)
+if ! command -v fish &>/dev/null; then
+  echo "Installing fish shell..."
+  sudo pacman -S --needed --noconfirm fish
+fi
+
+# Ensure yay is available (required by install.fish)
+if ! command -v yay &>/dev/null; then
+  echo "ERROR: yay not found, cannot install Aura desktop environment"
+  exit 1
+fi
+
+# Clone Aura-Dots to ~/.local/share/aura-dots
+AURA_DOTS_PATH="$HOME/.local/share/aura-dots"
+echo "Cloning Aura-Dots to $AURA_DOTS_PATH..."
+
+# Remove existing directory if it exists
+rm -rf "$AURA_DOTS_PATH"
+
+# Clone Aura-Dots
+git clone https://github.com/CjLogic/Aura-Dots.git "$AURA_DOTS_PATH" || {
+  echo "ERROR: Failed to clone Aura-Dots"
+  exit 1
+}
+
+# Run install.fish with --noconfirm and --aur-helper=yay
+echo "Running Aura-Dots install script..."
+cd "$AURA_DOTS_PATH"
+fish install.fish --noconfirm --aur-helper=yay || {
+  echo "ERROR: Aura-Dots installation failed"
+  exit 1
+}
+
+echo "Aura desktop environment installed successfully"

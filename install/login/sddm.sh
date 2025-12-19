@@ -1,12 +1,12 @@
 sudo mkdir -p /etc/sddm.conf.d
 
-# Create hyprland-uwsm session file for SDDM
+Create hyprland-uwsm session file for SDDM
 sudo mkdir -p /usr/share/wayland-sessions
 cat <<EOF | sudo tee /usr/share/wayland-sessions/hyprland-uwsm.desktop
 [Desktop Entry]
 Name=Hyprland (UWSM)
 Comment=Hyprland Wayland compositor managed by UWSM
-Exec=uwsm start -F hyprland.desktop
+Exec=uwsm start hyprland.desktop 
 Type=Application
 EOF
 
@@ -17,7 +17,7 @@ User=$USER
 Session=hyprland-uwsm
 
 [Theme]
-Current=aura
+Current=breeze
 EOF
 fi
 
