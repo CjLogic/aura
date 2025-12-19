@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aura-cmd-present "$EDITOR" || EDITOR=nvim
+aura-cmd-present "$EDITOR" || EDITOR=micro
 
 case "$EDITOR" in
 nvim | vim | nano | micro | hx | helix)

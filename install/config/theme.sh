@@ -12,7 +12,6 @@ ln -snf ~/.config/aura/themes/tokyo-night ~/.config/aura/current/theme
 ln -snf ~/.config/aura/current/theme/backgrounds/1-scenery-pink-lakeside-sunset-lake-landscape-scenic-panorama-7680x3215-144.png ~/.config/aura/current/background
 
 # Set specific app links for current theme
-# ~/.config/aura/current/theme/neovim.lua -> ~/.config/nvim/lua/plugins/theme.lua is handled via aura-setup-nvim
 
 mkdir -p ~/.config/btop/themes
 ln -snf ~/.config/aura/current/theme/btop.theme ~/.config/btop/themes/current.theme

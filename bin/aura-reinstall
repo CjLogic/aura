@@ -29,5 +29,4 @@ if gum confirm "Are you sure you want to reinstall and lose all config changes?"
 
   aura-refresh-limine
   aura-refresh-plymouth
-  aura-nvim-setup
 fi

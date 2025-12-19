@@ -6,8 +6,10 @@ base
 base-devel
 broadcom-wl
 btrfs-progs
+cmake
 dart
 dkms
+doxygen
 egl-wayland
 git
 gst-plugin-pipewire

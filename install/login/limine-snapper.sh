@@ -63,7 +63,7 @@ EOF
 #timeout: 3
 default_entry: 2
 interface_branding: Aura Bootloader
-interface_branding_color: 2
+interface_branding_color: 6
 hash_mismatch_panic: no
 
 term_background: 1a1b26

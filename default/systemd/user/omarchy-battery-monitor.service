@@ -1,0 +1,9 @@
+[Unit]
+Description=Aura Battery Monitor Check
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/aura/bin/aura-battery-monitor
+Environment=DISPLAY=:0
+LogLevelMax=warning

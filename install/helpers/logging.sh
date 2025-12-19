@@ -1,3 +1,12 @@
+get_random_quote() {
+  local quotes_file="$AURA_INSTALL/quotes.txt"
+  if [ -f "$quotes_file" ]; then
+    shuf -n 1 "$quotes_file"
+  else
+    echo "Installing Aura..."
+  fi
+}
+
 start_log_output() {
   local ANSI_SAVE_CURSOR="\033[s"
   local ANSI_RESTORE_CURSOR="\033[u"
@@ -5,21 +14,40 @@ start_log_output() {
   local ANSI_HIDE_CURSOR="\033[?25l"
   local ANSI_RESET="\033[0m"
   local ANSI_GRAY="\033[90m"
+  local ANSI_CYAN="\033[36m"
+  local ANSI_ITALIC="\033[3m"
 
   # Save cursor position and hide cursor
   printf $ANSI_SAVE_CURSOR
   printf $ANSI_HIDE_CURSOR
 
   (
-    local log_lines=20
+    local log_lines=18
     local max_line_width=$((LOGO_WIDTH - 4))
+    local quote_rotation_seconds=30
+    local last_quote_time=0
 
     while true; do
+      local current_time=$(date +%s)
+
+      # Get a new quote every 30 seconds
+      if [ $((current_time - last_quote_time)) -ge $quote_rotation_seconds ]; then
+        current_quote=$(get_random_quote)
+        last_quote_time=$current_time
+      fi
+
       # Read the last N lines into an array
       mapfile -t current_lines < <(tail -n $log_lines "$AURA_INSTALL_LOG_FILE" 2>/dev/null)
 
       # Build complete output buffer with escape sequences
       output=""
+
+      # Add quote at the top
+      if [ -n "$current_quote" ]; then
+        output+="${ANSI_CLEAR_LINE}${ANSI_CYAN}${ANSI_ITALIC}${PADDING_LEFT_SPACES}  💭 ${current_quote}${ANSI_RESET}\n"
+        output+="${ANSI_CLEAR_LINE}${PADDING_LEFT_SPACES}\n"
+      fi
+
       for ((i = 0; i < log_lines; i++)); do
         line="${current_lines[i]:-}"
 

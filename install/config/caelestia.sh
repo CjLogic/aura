@@ -97,7 +97,7 @@ if [ -d "$AURA_PATH/config/thunar" ]; then
 fi
 
 # Symlink other configs
-for config in waybar walker swayosd lazygit git fontconfig fcitx5 environment.d systemd hyprland-preview-share-picker; do
+for config in walker swayosd lazygit git fontconfig fcitx5 environment.d systemd hyprland-preview-share-picker mako; do
   if [ -d "$AURA_PATH/config/$config" ] || [ -f "$AURA_PATH/config/$config" ]; then
     symlink_config "$AURA_PATH/config/$config" "$CONFIG_DIR/$config"
     log "$config config installed"

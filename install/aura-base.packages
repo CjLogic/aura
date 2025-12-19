@@ -4,6 +4,7 @@
 # === Shell & Terminal ===
 fish
 foot
+ghostty
 starship
 bash-completion
 
@@ -50,6 +51,7 @@ clang
 llvm
 luarocks
 python-poetry-core
+python-terminaltexteffects
 
 # === Dev Tools - Databases ===
 postgresql-libs
