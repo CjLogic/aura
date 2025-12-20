@@ -1,8 +1,8 @@
 # Aura
 
-Aura is a beautiful, modern & opinionated Linux distribution by DHH.
+Aura = Beautiful aesthetics meets powerful dev tools
 
-Read more at [aura.org](https://aura.org).
+Read more at
 
 ## License
 
