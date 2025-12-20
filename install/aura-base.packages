@@ -1,4 +1,4 @@
-# Aura core package list - dev tools + Caelestia essentials
+# Aura core package list - dev tools + Aura essentials
 # This file is used by the ISO builder when determining needs
 
 # === Shell & Terminal ===
@@ -124,8 +124,8 @@ fontconfig
 adw-gtk-theme
 papirus-icon-theme
 gnome-themes-extra
-# qt5ct-kde  # AUR - installed via packaging/caelestia.sh
-# qt6ct-kde  # AUR - installed via packaging/caelestia.sh
+# qt5ct-kde  # AUR - installed via packaging/aura.sh
+# qt6ct-kde  # AUR - installed via packaging/aura.sh
 
 # === File Management ===
 thunar
@@ -147,10 +147,10 @@ brightnessctl
 tzupdate
 wireless-regdb
 
-# === Caelestia Dependencies ===
-# caelestia-cli     # AUR - installed via packaging/caelestia.sh
-# caelestia-shell   # AUR - installed via packaging/caelestia.sh
-# app2unit          # AUR - installed via packaging/caelestia.sh
+# === Aura Dependencies ===
+# aura-cli     # AUR - installed via packaging/aura.sh
+# aura-shell   # AUR - installed via packaging/aura.sh
+# app2unit          # AUR - installed via packaging/aura.sh
 inotify-tools
 direnv
 

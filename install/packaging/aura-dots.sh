@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Install Aura desktop environment (Caelestia-based with Aura customizations)
+# Install Aura desktop environment (Aura-based with Aura customizations)
 echo "Installing Aura desktop environment..."
 
 # Ensure fish is installed (required for install.fish)
@@ -35,5 +35,11 @@ fish install.fish --noconfirm --aur-helper=yay || {
   echo "ERROR: Aura-Dots installation failed"
   exit 1
 }
+
+# Add Aura-Dots bin to PATH for bash users
+echo "Adding Aura-Dots bin to PATH..."
+PROFILE_FILE="/etc/profile.d/aura-dots-bin.sh"
+echo "export PATH=\"\$HOME/.local/share/aura-dots/bin:\$PATH\"" | sudo tee "$PROFILE_FILE" > /dev/null
+sudo chmod +x "$PROFILE_FILE"
 
 echo "Aura desktop environment installed successfully"
