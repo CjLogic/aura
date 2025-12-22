@@ -15,6 +15,13 @@ if ! command -v yay &>/dev/null; then
   exit 1
 fi
 
+# Install aura-cli and aura-shell from custom repository
+echo "Installing aura-cli and aura-shell from Aura repository..."
+sudo pacman -Sy --noconfirm aura-cli aura-shell || {
+  echo "ERROR: Failed to install aura-cli and aura-shell from custom repository"
+  exit 1
+}
+
 # Clone Aura-Dots to ~/.local/share/aura-dots
 AURA_DOTS_PATH="$HOME/.local/share/aura-dots"
 echo "Cloning Aura-Dots to $AURA_DOTS_PATH..."
@@ -23,7 +30,7 @@ echo "Cloning Aura-Dots to $AURA_DOTS_PATH..."
 rm -rf "$AURA_DOTS_PATH"
 
 # Clone Aura-Dots
-git clone https://github.com/CjLogic/Aura-Dots.git "$AURA_DOTS_PATH" || {
+git clone https://github.com/CjLogic/aura-dots.git "$AURA_DOTS_PATH" || {
   echo "ERROR: Failed to clone Aura-Dots"
   exit 1
 }

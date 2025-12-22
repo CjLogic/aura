@@ -47,7 +47,7 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
   sudo pacman -S --needed --noconfirm "${PACKAGES_TO_INSTALL[@]}"
 
   # Configure modprobe for early KMS
-  log "Configuring modprobe..."
+  echo "Configuring modprobe..."
   echo "options nvidia_drm modeset=1 fbdev=1" | sudo tee /etc/modprobe.d/nvidia.conf >/dev/null
 
   # Configure mkinitcpio for early loading
@@ -66,13 +66,13 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
   # Clean up potential double spaces
   sudo sed -i -E 's/  +/ /g' "$MKINITCPIO_CONF"
 
-  log "Regenerating initramfs..."
+  echo "Regenerating initramfs..."
   sudo mkinitcpio -P
 
   # Configure Limine bootloader kernel parameters
   LIMINE_CFG="/boot/limine.cfg"
   if [ -f "$LIMINE_CFG" ]; then
-    log "Updating Limine bootloader configuration..."
+    echo "Updating Limine bootloader configuration..."
     # Add nvidia_drm.modeset=1 to kernel command line if not already present
     if ! grep -q "nvidia_drm.modeset=1" "$LIMINE_CFG"; then
       sudo sed -i 's/\(CMDLINE=.*\)/\1 nvidia_drm.modeset=1/' "$LIMINE_CFG"
@@ -84,7 +84,7 @@ if [ -n "$(lspci | grep -i 'nvidia')" ]; then
   HYPRLAND_ENV_CONF="$HOME/.config/hypr/hyprland/env.conf"
   mkdir -p "$(dirname "$HYPRLAND_ENV_CONF")"
 
-  log "Configuring Hyprland environment variables..."
+  echo "Configuring Hyprland environment variables..."
   cat >>"$HYPRLAND_ENV_CONF" <<'EOF'
 
 # NVIDIA environment variables
@@ -93,5 +93,5 @@ env = GBM_BACKEND,nvidia-drm
 env = __GLX_VENDOR_LIBRARY_NAME,nvidia
 EOF
 
-  log "NVIDIA setup complete!"
+  echo "NVIDIA setup complete!"
 fi
