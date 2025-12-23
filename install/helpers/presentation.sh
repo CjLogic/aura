@@ -31,7 +31,7 @@ export PADDING_LEFT_SPACES=$(printf "%*s" $PADDING_LEFT "")
 # Tokyo Night theme for gum confirm
 export GUM_CONFIRM_PROMPT_FOREGROUND="6"     # Cyan for prompt
 export GUM_CONFIRM_SELECTED_FOREGROUND="0"   # Black text on selected
-export GUM_CONFIRM_SELECTED_BACKGROUND="2"   # Green background for selected
+export GUM_CONFIRM_SELECTED_BACKGROUND="4"   # Green background for selected
 export GUM_CONFIRM_UNSELECTED_FOREGROUND="7" # White for unselected
 export GUM_CONFIRM_UNSELECTED_BACKGROUND="0" # Black background for unselected
 export PADDING="0 0 0 $PADDING_LEFT"         # Gum Style
@@ -44,5 +44,5 @@ export GUM_CONFIRM_PADDING="$PADDING"
 
 clear_logo() {
   printf "\033[H\033[2J" # Clear screen and move cursor to top-left
-  gum style --foreground 2 --padding "1 0 0 $PADDING_LEFT" "$(<"$LOGO_PATH")"
+  gum style --foreground 6 --padding "1 0 0 $PADDING_LEFT" "$(<"$LOGO_PATH")"
 }

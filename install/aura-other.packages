@@ -1,6 +1,8 @@
 # Packages installed outside of install/packages.sh or optional packages
 # Utilized by ISO builder to ensure package availability in the ISO
 
+gcc
+make
 autoconf-archive
 base
 base-devel
@@ -11,6 +13,7 @@ dart
 dkms
 doxygen
 egl-wayland
+curl
 git
 gst-plugin-pipewire
 gtk4-layer-shell

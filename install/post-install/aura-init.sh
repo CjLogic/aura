@@ -1,29 +1,28 @@
 #!/bin/bash
+set -euo pipefail
 
-# Initialize Aura shell and scheme
-echo "Initializing Aura"
+echo "Initializing Aura shell and daemon..."
 
-STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}"
+# Determine target user
+TARGET_USER="${SUDO_USER:-${USER:-root}}"
+TARGET_HOME="$(eval echo "~$TARGET_USER")"
 
-# Generate default color scheme if it doesn't exist
-if [ ! -f "$STATE_DIR/aura/scheme.json" ]; then
-  echo "Generating Aura color scheme..."
+STATE_DIR="${XDG_STATE_HOME:-$TARGET_HOME/.local/state}"
 
-  # Use aura CLI to set default scheme
-  if command -v aura &>/dev/null; then
-    aura scheme set -n shadotheme 2>/dev/null || echo "Warning: Could not generate color scheme"
-    sleep 0.5
-  else
-    echo "Warning: aura CLI not found, skipping scheme generation"
-  fi
+# Ensure aura state directory exists
+sudo -u "$TARGET_USER" mkdir -p "$STATE_DIR/aura"
+
+# Generate color scheme
+if command -v aura &>/dev/null; then
+  echo "Setting Aura color scheme..."
+  sudo -u "$TARGET_USER" aura scheme set -n shadotheme 2>/dev/null || echo "Warning: Could not set color scheme"
+  sleep 1
 fi
 
-# Start aura shell daemon
+# Start aura shell daemon as target user
 if command -v aura &>/dev/null; then
   echo "Starting Aura shell daemon..."
-  aura shell -d >/dev/null 2>&1 || echo "Warning: Could not start aura shell daemon"
-else
-  echo "Warning: aura CLI not found, skipping shell daemon"
+  sudo -u "$TARGET_USER" aura shell -d >/dev/null 2>&1 || echo "Warning: Could not start aura shell daemon"
 fi
 
 # Reload Hyprland if running

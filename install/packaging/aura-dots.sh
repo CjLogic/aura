@@ -1,52 +1,54 @@
 #!/bin/bash
+set -euo pipefail
 
-# Install Aura desktop environment (Aura-based with Aura customizations)
-echo "Installing Aura desktop environment..."
+echo "Installing Aura OS environment..."
 
-# Ensure fish is installed (required for install.fish)
-if ! command -v fish &>/dev/null; then
-  echo "Installing fish shell..."
-  sudo pacman -S --needed --noconfirm fish
-fi
+# Determine target user
+TARGET_USER="${SUDO_USER:-${USER:-root}}"
+TARGET_HOME="$(eval echo "~$TARGET_USER")"
+echo "Target user: $TARGET_USER"
+echo "Target home: $TARGET_HOME"
 
-# Ensure yay is available (required by install.fish)
-if ! command -v yay &>/dev/null; then
-  echo "ERROR: yay not found, cannot install Aura desktop environment"
-  exit 1
-fi
+# Wait for network
+echo "Waiting for network..."
+for i in {1..30}; do
+  if ping -c1 8.8.8.8 &>/dev/null || ping -c1 archlinux.org &>/dev/null; then
+    echo "Network available"
+    break
+  fi
+  echo "Attempt $i/30: waiting for network..."
+  sleep 2
+done
 
-# Install aura-cli and aura-shell from custom repository
-echo "Installing aura-cli and aura-shell from Aura repository..."
-sudo pacman -Sy --noconfirm aura-cli aura-shell || {
-  echo "ERROR: Failed to install aura-cli and aura-shell from custom repository"
-  exit 1
-}
+# Ensure git and fish are available
+echo "Ensuring git and fish are installed..."
+sudo pacman -Sy --needed --noconfirm git fish
 
-# Clone Aura-Dots to ~/.local/share/aura-dots
-AURA_DOTS_PATH="$HOME/.local/share/aura-dots"
+# Clone aura-dots to ~/.local/share/aura-dots
+AURA_DOTS_PATH="$TARGET_HOME/.local/share/aura-dots"
 echo "Cloning Aura-Dots to $AURA_DOTS_PATH..."
-
-# Remove existing directory if it exists
-rm -rf "$AURA_DOTS_PATH"
-
-# Clone Aura-Dots
-git clone https://github.com/CjLogic/aura-dots.git "$AURA_DOTS_PATH" || {
+sudo -u "$TARGET_USER" mkdir -p "$(dirname "$AURA_DOTS_PATH")"
+sudo -u "$TARGET_USER" rm -rf "$AURA_DOTS_PATH"
+if ! sudo -u "$TARGET_USER" git clone https://github.com/CjLogic/aura-dots.git "$AURA_DOTS_PATH"; then
   echo "ERROR: Failed to clone Aura-Dots"
   exit 1
-}
+fi
 
-# Run install.fish with --noconfirm and --aur-helper=yay
-echo "Running Aura-Dots install script..."
-cd "$AURA_DOTS_PATH"
-fish install.fish --noconfirm --aur-helper=yay || {
-  echo "ERROR: Aura-Dots installation failed"
-  exit 1
-}
+# Run install.fish with proper environment variables and --noconfirm
+echo "Running install.fish as $TARGET_USER..."
+# Note: The aura command may not be fully available yet during first install
+# The install.fish script handles this gracefully by checking command availability
+if [ "$TARGET_USER" = "root" ]; then
+  HOME="$TARGET_HOME" XDG_CONFIG_HOME="$TARGET_HOME/.config" XDG_STATE_HOME="$TARGET_HOME/.local/state" \
+  fish "$AURA_DOTS_PATH/install.fish" --noconfirm --aur-helper=yay || { echo "ERROR: install.fish failed"; exit 1; }
+else
+  sudo -u "$TARGET_USER" env HOME="$TARGET_HOME" XDG_CONFIG_HOME="$TARGET_HOME/.config" XDG_STATE_HOME="$TARGET_HOME/.local/state" \
+  fish "$AURA_DOTS_PATH/install.fish" --noconfirm --aur-helper=yay || { echo "ERROR: install.fish failed"; exit 1; }
+fi
 
-# Add Aura-Dots bin to PATH for bash users
-echo "Adding Aura-Dots bin to PATH..."
+# Add Aura-Dots bin to PATH for all users
 PROFILE_FILE="/etc/profile.d/aura-dots-bin.sh"
-echo "export PATH=\"\$HOME/.local/share/aura-dots/bin:\$PATH\"" | sudo tee "$PROFILE_FILE" > /dev/null
+echo 'export PATH="$HOME/.local/share/aura-dots/bin:$PATH"' | sudo tee "$PROFILE_FILE" > /dev/null
 sudo chmod +x "$PROFILE_FILE"
 
-echo "Aura desktop environment installed successfully"
+echo "Aura OS environment installed successfully"

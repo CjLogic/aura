@@ -3,9 +3,10 @@
 
 # === Shell & Terminal ===
 fish
-foot
+# foot
 ghostty
-starship
+stow
+# starship
 bash-completion
 
 # === System utilities ===
@@ -13,7 +14,6 @@ bat
 btop
 dust
 eza
-fastfetch
 fd
 fzf
 gum
@@ -30,6 +30,10 @@ inxi
 usage
 jq
 xmlstarlet
+bluetui
+
+# === Build Tools ===
+yay
 
 # === Dev Tools - Version Managers ===
 mise
@@ -58,16 +62,15 @@ postgresql-libs
 mariadb-libs
 
 # === Dev Tools - Editors ===
-code
 micro
 
 # === Hyprland Desktop Environment ===
-hyprland
+# hyprland
 hyprland-guiutils
 hyprland-preview-share-picker
 hypridle
 hyprlock
-hyprpicker
+# hyprpicker
 hyprsunset
 waybar
 swaybg
@@ -79,19 +82,19 @@ grim
 slurp
 satty
 wayfreeze
-wl-clipboard
-cliphist
+# wl-clipboard
+# cliphist
 imagemagick
 
 # === Display Protocols ===
-xdg-desktop-portal-gtk
-xdg-desktop-portal-hyprland
+# xdg-desktop-portal-gtk
+# xdg-desktop-portal-hyprland
 xdg-terminal-exec
 qt5-wayland
 qt6-wayland
 
 # === Audio ===
-wireplumber
+# wireplumber
 pamixer
 playerctl
 
@@ -121,19 +124,19 @@ woff2-font-awesome
 fontconfig
 
 # === Themes & Icons ===
-adw-gtk-theme
-papirus-icon-theme
 gnome-themes-extra
-# qt5ct-kde  # AUR - installed via packaging/aura.sh
-# qt6ct-kde  # AUR - installed via packaging/aura.sh
+# adw-gtk-theme
+# papirus-icon-theme
+# qt5ct-kde  # AUR - installed via packaging/aura-dots.sh
+# qt6ct-kde  # AUR - installed via packaging/aura-dots.sh
 
 # === File Management ===
-thunar
+nautilus
 gvfs-mtp
 gvfs-nfs
 gvfs-smb
 gnome-disk-utility
-trash-cli
+# trash-cli
 exfatprogs
 ffmpegthumbnailer
 
@@ -147,16 +150,11 @@ brightnessctl
 tzupdate
 wireless-regdb
 
-# === Aura Dependencies ===
-# aura-cli     # AUR - installed via packaging/aura.sh
-# aura-shell   # AUR - installed via packaging/aura.sh
-# app2unit          # AUR - installed via packaging/aura.sh
-inotify-tools
+# === Aura Favs ===
+discover
 direnv
-
-# === Build Tools ===
-yay
-base-devel
+flatpak
+okular
 
 # === System Libraries ===
 libyaml
