@@ -1,0 +1,6 @@
+#!/bin/bash
+
+APP_ID="org.aura.$(basename $1)"
+LAUNCH_COMMAND="aura-launch-tui $@"
+
+exec aura-launch-or-focus "$APP_ID" "$LAUNCH_COMMAND"

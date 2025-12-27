@@ -1,54 +1,102 @@
-#!/bin/bash
-set -euo pipefail
+# Aura configuration deployment
+# Configs are in the aura repo, copy them to user's home
 
-echo "Installing Aura OS environment..."
+echo "=========================================="
+echo "Deploying Aura Configurations"
+echo "=========================================="
+echo "Target: $HOME"
+echo "Aura Install: $AURA_INSTALL"
 
-# Determine target user
-TARGET_USER="${SUDO_USER:-${USER:-root}}"
-TARGET_HOME="$(eval echo "~$TARGET_USER")"
-echo "Target user: $TARGET_USER"
-echo "Target home: $TARGET_HOME"
+# Copy all configs from aura/default to .config
+if [ -d "$AURA_INSTALL/../default" ]; then
+    AURA_DEFAULT="$AURA_INSTALL/../default"
 
-# Wait for network
-echo "Waiting for network..."
-for i in {1..30}; do
-  if ping -c1 8.8.8.8 &>/dev/null || ping -c1 archlinux.org &>/dev/null; then
-    echo "Network available"
-    break
-  fi
-  echo "Attempt $i/30: waiting for network..."
-  sleep 2
-done
+    # Copy each config directory (except hypr, we'll handle it specially)
+    for dir in "$AURA_DEFAULT"/*; do
+        if [ -d "$dir" ]; then
+            dirname=$(basename "$dir")
+            if [ "$dirname" != "hypr" ]; then
+                echo "  - Copying $dirname to ~/.config/"
+                cp -r "$dir" "$HOME/.config/"
+            fi
+        fi
+    done
 
-# Ensure git and fish are available
-echo "Ensuring git and fish are installed..."
-sudo pacman -Sy --needed --noconfirm git fish
+    # Copy hypr to .config/hypr
+    if [ -d "$AURA_DEFAULT/hypr" ]; then
+        echo "  - Copying hypr to ~/.config/hypr"
+        cp -r "$AURA_DEFAULT/hypr" "$HOME/.config/"
+    fi
 
-# Clone aura-dots to ~/.local/share/aura-dots
-AURA_DOTS_PATH="$TARGET_HOME/.local/share/aura-dots"
-echo "Cloning Aura-Dots to $AURA_DOTS_PATH..."
-sudo -u "$TARGET_USER" mkdir -p "$(dirname "$AURA_DOTS_PATH")"
-sudo -u "$TARGET_USER" rm -rf "$AURA_DOTS_PATH"
-if ! sudo -u "$TARGET_USER" git clone https://github.com/CjLogic/aura-dots.git "$AURA_DOTS_PATH"; then
-  echo "ERROR: Failed to clone Aura-Dots"
-  exit 1
-fi
+    # Create .config/aura with user config files
+    mkdir -p "$HOME/.config/aura"
+    cat > "$HOME/.config/aura/hypr-user.conf" << 'EOF'
+# User-specific Hyprland configuration
+# Add your custom Hyprland configs here
+# This file is sourced by hyprland.conf
 
-# Run install.fish with proper environment variables and --noconfirm
-echo "Running install.fish as $TARGET_USER..."
-# Note: The aura command may not be fully available yet during first install
-# The install.fish script handles this gracefully by checking command availability
-if [ "$TARGET_USER" = "root" ]; then
-  HOME="$TARGET_HOME" XDG_CONFIG_HOME="$TARGET_HOME/.config" XDG_STATE_HOME="$TARGET_HOME/.local/state" \
-  fish "$AURA_DOTS_PATH/install.fish" --noconfirm --aur-helper=yay || { echo "ERROR: install.fish failed"; exit 1; }
+EOF
+
+    cat > "$HOME/.config/aura/hypr-vars.conf" << 'EOF'
+# User-specific Hyprland variables
+# Add your custom variables here
+# This file is sourced by variables.conf
+
+EOF
+
+    # Copy config files
+    [ -f "$AURA_DEFAULT/starship.toml" ] && cp "$AURA_DEFAULT/starship.toml" "$HOME/.config/"
+    [ -f "$AURA_DEFAULT/bashrc" ] && cp "$AURA_DEFAULT/bashrc" "$HOME/.bashrc"
+    [ -f "$AURA_DEFAULT/xcompose" ] && cp "$AURA_DEFAULT/xcompose" "$HOME/.XCompose"
+    [ -f "$AURA_DEFAULT/xdg-terminals.list" ] && cp "$AURA_DEFAULT/xdg-terminals.list" "$HOME/.config/"
+
+    echo ""
+    echo "Copying source code..."
+
+    # Copy aura-cli source (from /root during ISO install)
+    if [ -d "/root/aura-cli" ]; then
+        echo "  ✅ Found aura-cli in /root/aura-cli"
+        echo "  - Copying aura-cli source to ~/.local/src/aura-cli"
+        mkdir -p "$HOME/.local/src"
+        cp -r "/root/aura-cli" "$HOME/.local/src/" && echo "  ✅ aura-cli source copied successfully"
+    elif [ -d "$AURA_INSTALL/../../aura-cli" ]; then
+        echo "  ✅ Found aura-cli in aura repo"
+        echo "  - Copying aura-cli source to ~/.local/src/aura-cli (from aura repo)"
+        mkdir -p "$HOME/.local/src"
+        cp -r "$AURA_INSTALL/../../aura-cli" "$HOME/.local/src/" && echo "  ✅ aura-cli source copied successfully"
+    else
+        echo "  ❌ WARNING: aura-cli source not found!"
+        echo "     Checked: /root/aura-cli and $AURA_INSTALL/../../aura-cli"
+    fi
+
+    # Copy aura-shell source (from /root during ISO install)
+    if [ -d "/root/Aura-Shell" ]; then
+        echo "  ✅ Found Aura-Shell in /root/Aura-Shell"
+        echo "  - Copying aura-shell source to ~/.config/quickshell/aura"
+        mkdir -p "$HOME/.config/quickshell"
+        cp -r "/root/Aura-Shell" "$HOME/.config/quickshell/aura" && echo "  ✅ aura-shell source copied successfully"
+    elif [ -d "$AURA_INSTALL/../../Aura-Shell" ]; then
+        echo "  ✅ Found Aura-Shell in aura repo"
+        echo "  - Copying aura-shell source to ~/.config/quickshell/aura (from aura repo)"
+        mkdir -p "$HOME/.config/quickshell"
+        cp -r "$AURA_INSTALL/../../Aura-Shell" "$HOME/.config/quickshell/aura" && echo "  ✅ aura-shell source copied successfully"
+    else
+        echo "  ❌ WARNING: Aura-Shell source not found!"
+        echo "     Checked: /root/Aura-Shell and $AURA_INSTALL/../../Aura-Shell"
+    fi
+
+    echo "✅ Aura configs deployed!"
 else
-  sudo -u "$TARGET_USER" env HOME="$TARGET_HOME" XDG_CONFIG_HOME="$TARGET_HOME/.config" XDG_STATE_HOME="$TARGET_HOME/.local/state" \
-  fish "$AURA_DOTS_PATH/install.fish" --noconfirm --aur-helper=yay || { echo "ERROR: install.fish failed"; exit 1; }
+    echo "WARNING: Aura default configs not found at $AURA_INSTALL/../default"
+    echo "Skipping config deployment."
 fi
 
-# Add Aura-Dots bin to PATH for all users
-PROFILE_FILE="/etc/profile.d/aura-dots-bin.sh"
-echo 'export PATH="$HOME/.local/share/aura-dots/bin:$PATH"' | sudo tee "$PROFILE_FILE" > /dev/null
-sudo chmod +x "$PROFILE_FILE"
-
-echo "Aura OS environment installed successfully"
+echo ""
+echo "Users have:"
+echo "  - Complete Hyprland configs (.config/hypr)"
+echo "  - All app configs (foot, ghostty, fastfetch, etc.)"
+echo "  - aura-cli source (~/.local/src/aura-cli)"
+echo "  - aura-shell source (~/.config/quickshell/aura)"
+echo ""
+echo "To install aura-cli and aura-shell:"
+echo "  Run: install-aura-full"

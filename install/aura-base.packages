@@ -4,16 +4,16 @@
 # === Shell & Terminal ===
 fish
 # foot
+kitty
 ghostty
 stow
-# starship
 bash-completion
+bash
 
 # === System utilities ===
 bat
 btop
 dust
-eza
 fd
 fzf
 gum
@@ -28,7 +28,6 @@ whois
 zoxide
 inxi
 usage
-jq
 xmlstarlet
 bluetui
 
@@ -55,7 +54,6 @@ clang
 llvm
 luarocks
 python-poetry-core
-python-terminaltexteffects
 
 # === Dev Tools - Databases ===
 postgresql-libs
@@ -65,36 +63,74 @@ mariadb-libs
 micro
 
 # === Hyprland Desktop Environment ===
-# hyprland
+hyprland
 hyprland-guiutils
 hyprland-preview-share-picker
 hypridle
 hyprlock
-# hyprpicker
 hyprsunset
 waybar
 swaybg
 swayosd
 mako
 wofi
-walker
 grim
 slurp
 satty
-wayfreeze
-# wl-clipboard
-# cliphist
 imagemagick
+omarchy-walker
+
+# === Aura OS Deps ===
+xdg-desktop-portal-gtk
+xdg-desktop-portal-hyprland
+hyprpicker
+starship
+wl-clipboard
+cliphist
+inotify-tools
+wireplumber
+trash-cli
+adw-gtk-theme
+papirus-icon-theme
+nautilus
+hyprpolkitagent
+fastfetch
+jq
+eza
+ttf-jetbrains-mono-nerd
+thunar
+
+
+# === Aura Shell Deps ===
+ddcutil
+brightnessctl
+networkmanager
+aubio
+libpipewire
+qt6-declarative
+gcc-libs
+swappy
+libqalculate
+qt6-base
+
+# === Aura CLI Deps ===
+libnotify
+swappy
+grim
+dart-sass
+wl-clipboard
+slurp
+glib2
+fuzzel
+ninja
+cliphist
+
 
 # === Display Protocols ===
-# xdg-desktop-portal-gtk
-# xdg-desktop-portal-hyprland
-xdg-terminal-exec
 qt5-wayland
 qt6-wayland
 
 # === Audio ===
-# wireplumber
 pamixer
 playerctl
 
@@ -102,12 +138,10 @@ playerctl
 iwd
 avahi
 nss-mdns
-localsend
 
 # === System Services ===
 sddm
 polkit-gnome
-hyprpolkitagent
 gnome-keyring
 libsecret
 power-profiles-daemon
@@ -118,25 +152,18 @@ noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
-ttf-jetbrains-mono-nerd
 ttf-cascadia-mono-nerd
 woff2-font-awesome
 fontconfig
 
 # === Themes & Icons ===
 gnome-themes-extra
-# adw-gtk-theme
-# papirus-icon-theme
-# qt5ct-kde  # AUR - installed via packaging/aura-dots.sh
-# qt6ct-kde  # AUR - installed via packaging/aura-dots.sh
 
 # === File Management ===
-nautilus
 gvfs-mtp
 gvfs-nfs
 gvfs-smb
 gnome-disk-utility
-# trash-cli
 exfatprogs
 ffmpegthumbnailer
 

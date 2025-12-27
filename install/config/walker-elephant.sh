@@ -2,7 +2,14 @@
 
 # Ensure Walker service is started automatically on boot
 mkdir -p ~/.config/autostart/
-cp $AURA_PATH/autostart/walker.desktop ~/.config/autostart/
+cp $AURA_PATH/autostart/walker.desktop ~/.config/autostart/ || true
+
+# Copy welcome screen autostart (runs on first login)
+if [ -f "$AURA_PATH/autostart/aura-welcome.desktop" ]; then
+    cp $AURA_PATH/autostart/aura-welcome.desktop ~/.config/autostart/
+else
+    echo "Warning: aura-welcome.desktop not found, skipping"
+fi
 
 # Create pacman hook to restart walker after updates
 sudo mkdir -p /etc/pacman.d/hooks

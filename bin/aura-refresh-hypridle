@@ -1,0 +1,4 @@
+#!/bin/bash
+
+aura-refresh-config hypr/hypridle.conf
+aura-restart-hypridle

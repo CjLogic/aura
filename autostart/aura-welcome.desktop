@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Aura Welcome
+Comment=Display AuraOS welcome message on first login
+Exec=/bin/bash -c 'if [ -f ~/.local/state/aura/first-run.mode ]; then ~/.local/share/aura/install/first-run/welcome.sh && rm ~/.local/state/aura/first-run.mode; fi'
+Terminal=true
+NoDisplay=true
+X-GNOME-Autostart-enabled=true

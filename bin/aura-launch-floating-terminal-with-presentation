@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cmd="$*"
+exec setsid uwsm-app -- xdg-terminal-exec --app-id=org.aura.terminal --title=Aura -e bash -c "aura-show-logo; $cmd; aura-show-done"

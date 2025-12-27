@@ -1,0 +1,5 @@
+#!/bin/bash
+
+aura-refresh-config swayosd/config.toml
+aura-refresh-config swayosd/style.css
+aura-restart-swayosd
