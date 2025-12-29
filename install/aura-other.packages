@@ -9,6 +9,7 @@ base-devel
 broadcom-wl
 btrfs-progs
 cmake
+go
 dart
 dkms
 doxygen
@@ -47,6 +48,16 @@ webp-pixbuf-loader
 wget
 yay-debug
 zram-generator
+
+# GNOME - Backup desktop session
+xorg
+xorg-server
+gdm
+gnome-shell
+gnome-control-center
+gnome-terminal
+gnome-text-editor
+gnome-session
 
 # T2 MacBook support packages (disabled - not needed)
 # apple-bcm-firmware

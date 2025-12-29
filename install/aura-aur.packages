@@ -8,7 +8,6 @@ libcava
 
 # === Aura CLI AUR Deps ===
 xdg-terminal-exec
-wayfreeze
 gpu-screen-recorder
 
 # === Qt/Display AUR Deps ===
@@ -20,13 +19,12 @@ qqc2-desktop-style5
 # === Python Build Tools (AUR) ===
 python-build
 python-installer
-python-hatch
-python-hatch-vcs
 python-terminaltexteffects
 
 # === Applications (AUR) ===
 localsend
 todoist-appimage
 #zen-browser
-lm-sensors
+i2c-tools
 ufw-docker
+gdm-settings

@@ -1,5 +1,26 @@
 sudo mkdir -p /etc/sddm.conf.d
 
+# Copy Aura SDDM theme
+sudo mkdir -p /usr/share/sddm/themes/aura
+
+# Copy background image
+if [ -f "$HOME/.local/share/aura/default/plymouth/background.png" ]; then
+  sudo cp "$HOME/.local/share/aura/default/plymouth/background.png" /usr/share/sddm/themes/aura/background.png
+elif [ -f "/root/aura/default/plymouth/background.png" ]; then
+  sudo cp "/root/aura/default/plymouth/background.png" /usr/share/sddm/themes/aura/background.png
+fi
+
+# Copy SDDM theme files
+if [ -d "$HOME/.local/share/aura/default/sddm" ]; then
+  sudo cp "$HOME/.local/share/aura/default/sddm/theme.conf" /usr/share/sddm/themes/aura/
+  sudo cp "$HOME/.local/share/aura/default/sddm/Main.qml" /usr/share/sddm/themes/aura/
+  sudo cp "$HOME/.local/share/aura/default/sddm/metadata.desktop" /usr/share/sddm/themes/aura/
+elif [ -d "/root/aura/default/sddm" ]; then
+  sudo cp "/root/aura/default/sddm/theme.conf" /usr/share/sddm/themes/aura/
+  sudo cp "/root/aura/default/sddm/Main.qml" /usr/share/sddm/themes/aura/
+  sudo cp "/root/aura/default/sddm/metadata.desktop" /usr/share/sddm/themes/aura/
+fi
+
 # Create hyprland-uwsm session file for SDDM
 # sudo mkdir -p /usr/share/wayland-sessions
 # cat <<EOF | sudo tee /usr/share/wayland-sessions/hyprland-uwsm.desktop
@@ -17,7 +38,8 @@ User=$USER
 Session=hyprland-uwsm
 
 [Theme]
-Current=breeze
+Current=aura
+CursorTheme=Adwaita
 EOF
 fi
 

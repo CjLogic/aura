@@ -31,9 +31,6 @@ usage
 xmlstarlet
 bluetui
 
-# === Build Tools ===
-yay
-
 # === Dev Tools - Version Managers ===
 mise
 
@@ -140,7 +137,6 @@ avahi
 nss-mdns
 
 # === System Services ===
-sddm
 polkit-gnome
 gnome-keyring
 libsecret
@@ -169,7 +165,7 @@ ffmpegthumbnailer
 
 # === Security ===
 ufw
-ufw-docker
+# ufw-docker - moved to aura-aur.packages (AUR package)
 
 # === Boot & System ===
 plymouth

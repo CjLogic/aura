@@ -1,0 +1,13 @@
+[SddmGreeterTheme]
+Name=Aura
+Description=Aura SDDM theme with custom background
+Author=AuraOS
+Type=sddm-theme
+Version=1.0
+Website=https://github.com/CjLogic/aura
+Screenshot=background.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=
+Theme-Id=aura
+Theme-API=2.0

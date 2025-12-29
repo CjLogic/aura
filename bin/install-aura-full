@@ -1,213 +1,33 @@
 #!/bin/bash
-# Complete Aura installation script - builds from source already in home directory
+# Wrapper script for install-aura-post (fish script)
 
-echo "╔═══════════════════════════════════════════════════════════════════╗"
-echo "║         Complete Aura Installation (CLI + Shell)                 ║"
-echo "╚═══════════════════════════════════════════════════════════════════╝"
-echo ""
-
-# Verify source code exists before proceeding
-echo "Checking for source code..."
-CLI_SRC_EXISTS=false
-SHELL_SRC_EXISTS=false
-
-if [ -d "$HOME/.local/src/aura-cli" ]; then
-    echo "  ✅ aura-cli source found at ~/.local/src/aura-cli"
-    CLI_SRC_EXISTS=true
-else
-    echo "  ❌ aura-cli source NOT found at ~/.local/src/aura-cli"
-fi
-
-if [ -d "$HOME/.config/quickshell/aura" ]; then
-    echo "  ✅ aura-shell source found at ~/.config/quickshell/aura"
-    SHELL_SRC_EXISTS=true
-else
-    echo "  ❌ aura-shell source NOT found at ~/.config/quickshell/aura"
-fi
-
-if [ "$CLI_SRC_EXISTS" = false ] || [ "$SHELL_SRC_EXISTS" = false ]; then
-    echo ""
-    echo "❌ ERROR: Missing source code!"
-    echo ""
-    echo "The source code should have been copied during installation."
-    echo "This likely means the aura-dots.sh script didn't run or failed."
-    echo ""
-    echo "To fix this manually:"
-    if [ "$CLI_SRC_EXISTS" = false ]; then
-        echo "  1. Copy aura-cli source:"
-        echo "     mkdir -p ~/.local/src"
-        echo "     cp -r /root/aura-cli ~/.local/src/  # (if still available)"
-    fi
-    if [ "$SHELL_SRC_EXISTS" = false ]; then
-        echo "  2. Copy aura-shell source:"
-        echo "     mkdir -p ~/.config/quickshell"
-        echo "     cp -r /root/Aura-Shell ~/.config/quickshell/aura  # (if still available)"
-    fi
-    echo ""
-    read -p "Continue anyway? [y/N] " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+# Check if fish is installed
+if ! command -v fish &> /dev/null; then
+    echo "❌ ERROR: Fish shell is not installed"
+    echo "Installing fish..."
+    sudo pacman -Syu fish --noconfirm --needed || {
+        echo "Failed to install fish. Please install it manually: sudo pacman -S fish"
         exit 1
-    fi
-fi
-
-echo ""
-
-# Ensure yay is installed for AUR dependencies
-if ! command -v yay &> /dev/null; then
-    echo "Installing yay..."
-    sudo pacman -S --noconfirm --needed git base-devel
-    cd /tmp
-    git clone https://aur.archlinux.org/yay.git
-    cd yay
-    makepkg -si --noconfirm
-    cd ..
-    rm -rf yay
-fi
-
-echo "==================================="
-echo "Step 1: Installing AUR Dependencies"
-echo "==================================="
-
-# Install AUR dependencies needed for aura-cli and aura-shell
-echo "Installing AUR dependencies with yay..."
-echo "This may take a while as packages are built from source..."
-echo ""
-
-# Read AUR packages from aura-aur.packages if it exists
-if [ -f "$HOME/.local/share/aura/install/aura-aur.packages" ]; then
-    aur_packages=($(grep -v '^#' "$HOME/.local/share/aura/install/aura-aur.packages" | grep -v '^$'))
-    echo "Installing ${#aur_packages[@]} AUR packages..."
-    yay -S --noconfirm --needed --removemake --cleanafter "${aur_packages[@]}" || {
-        echo "⚠️  Warning: Some AUR packages failed to install"
-        echo "Continuing anyway..."
     }
-else
-    echo "⚠️  aura-aur.packages not found, you may need to install dependencies manually"
 fi
 
-echo ""
-echo "==================================="
-echo "Step 2: Building aura-cli"
-echo "==================================="
+# Find the install-aura-post script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+POST_SCRIPT="$SCRIPT_DIR/install-aura-post"
 
-# Build aura-cli from local source
-CLI_DIR="$HOME/.local/src/aura-cli"
-if [ ! -d "$CLI_DIR" ]; then
-    echo "❌ ERROR: aura-cli source not found at $CLI_DIR"
-    echo "Expected to be in /etc/skel from ISO"
-    echo "Skipping aura-cli installation..."
-    AURA_CLI_FAILED=1
-else
-    cd "$CLI_DIR"
-    echo "Building aura-cli from $CLI_DIR..."
-
-    if python -m build --wheel; then
-        echo "Installing aura-cli..."
-        if sudo python -m installer dist/*.whl; then
-            echo "Installing fish completions..."
-            sudo mkdir -p /usr/share/fish/vendor_completions.d
-            sudo cp completions/aura.fish /usr/share/fish/vendor_completions.d/aura.fish 2>/dev/null || true
-            echo "✅ aura-cli installed successfully!"
-        else
-            echo "❌ Failed to install aura-cli wheel"
-            AURA_CLI_FAILED=1
-        fi
-    else
-        echo "❌ Failed to build aura-cli"
-        echo "Make sure python-build and python-installer are installed"
-        AURA_CLI_FAILED=1
-    fi
+# Check if the fish script exists
+if [ ! -f "$POST_SCRIPT" ]; then
+    # Try alternate location
+    POST_SCRIPT="$HOME/.local/share/aura/bin/install-aura-post"
 fi
 
-echo ""
-echo "==================================="
-echo "Step 3: Building aura-shell"
-echo "==================================="
-
-# Build aura-shell from local source
-SHELL_DIR="$HOME/.config/quickshell/aura"
-if [ ! -d "$SHELL_DIR" ]; then
-    echo "❌ ERROR: aura-shell source not found at $SHELL_DIR"
-    echo "Expected to be in /etc/skel from ISO"
-    echo "Skipping aura-shell installation..."
-    AURA_SHELL_FAILED=1
-else
-    cd "$SHELL_DIR"
-    echo "Building aura-shell from $SHELL_DIR..."
-
-    if cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/ -DINSTALL_QSCONFDIR=~/.config/quickshell/aura; then
-        if cmake --build build; then
-            echo "Installing aura-shell..."
-            if sudo cmake --install build; then
-                sudo chown -R $USER ~/.config/quickshell/aura
-                echo "✅ aura-shell installed successfully!"
-            else
-                echo "❌ Failed to install aura-shell"
-                AURA_SHELL_FAILED=1
-            fi
-        else
-            echo "❌ Failed to build aura-shell"
-            echo "Make sure cmake, ninja, quickshell-git and Qt dependencies are installed"
-            AURA_SHELL_FAILED=1
-        fi
-    else
-        echo "❌ Failed to configure aura-shell build"
-        echo "Make sure cmake and ninja are installed"
-        AURA_SHELL_FAILED=1
-    fi
+if [ ! -f "$POST_SCRIPT" ]; then
+    echo "❌ ERROR: install-aura-post script not found"
+    exit 1
 fi
 
-echo ""
-echo "╔═══════════════════════════════════════════════════════════════════╗"
-echo "║                  Installation Complete!                          ║"
-echo "╚═══════════════════════════════════════════════════════════════════╝"
-echo ""
-echo "Installation Summary:"
-echo ""
+# Make sure it's executable
+chmod +x "$POST_SCRIPT"
 
-# Show what succeeded
-if [ -z "$AURA_CLI_FAILED" ]; then
-    echo "  ✅ aura-cli - Available via 'aura' command"
-else
-    echo "  ❌ aura-cli - Installation failed"
-fi
-
-if [ -z "$AURA_SHELL_FAILED" ]; then
-    echo "  ✅ aura-shell - Available via 'aura shell -d'"
-else
-    echo "  ❌ aura-shell - Installation failed"
-fi
-
-echo "  ✅ All configs in ~/.config/"
-echo ""
-
-# Show next steps or troubleshooting
-if [ -z "$AURA_CLI_FAILED" ] && [ -z "$AURA_SHELL_FAILED" ]; then
-    echo "Next steps:"
-    echo "  1. Restart Hyprland (SUPER + SHIFT + E) or log out and log back in"
-    echo "  2. The shell will start automatically"
-    echo "  3. Use 'aura -h' to explore CLI commands"
-    echo ""
-    echo "Optional: Install additional apps"
-    echo "  - Run 'install-aura-aur-packages' for more AUR packages"
-else
-    echo "⚠️  Some components failed to install."
-    echo ""
-    echo "Troubleshooting:"
-    echo "  - Check the error messages above"
-    echo "  - Make sure all AUR dependencies installed correctly"
-    echo "  - Try installing missing packages manually with: yay -S <package-name>"
-    echo "  - Run this script again after fixing dependencies"
-    echo ""
-    if [ -n "$AURA_CLI_FAILED" ]; then
-        echo "For aura-cli issues:"
-        echo "  - Ensure python-build and python-installer are installed"
-        echo "  - Check if source exists at: ~/.local/src/aura-cli"
-    fi
-    if [ -n "$AURA_SHELL_FAILED" ]; then
-        echo "For aura-shell issues:"
-        echo "  - Ensure cmake, ninja, quickshell-git are installed"
-        echo "  - Check if source exists at: ~/.config/quickshell/aura"
-    fi
-fi
+# Run the fish script with all arguments
+exec fish "$POST_SCRIPT" "$@"

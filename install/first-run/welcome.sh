@@ -12,21 +12,33 @@ cat << 'EOF'
             🎉 CONGRATULATIONS! Your AuraOS installation is complete!
 
      ┌─────────────────────────────────────────────────────────────────┐
-     │         IMPORTANT: Complete Aura Installation                   │
+     │         IMPORTANT: Setup Instructions                           │
      └─────────────────────────────────────────────────────────────────┘
 
-         You have Aura configs and ALL dependencies already installed! ✅
+         You are currently in GNOME (backup session). To get the full
+         Aura Hyprland experience, follow these steps:
 
-         To complete the installation (build aura-cli and aura-shell):
+         STEP 1: Install Aura components (you're here!)
+         ───────────────────────────────────────────
+         Run this command to install aura-cli and aura-shell:
 
              install-aura-full
 
-      This builds from source and installs:
-         • aura-cli - Powerful CLI tools for Aura
-         • aura-shell - Beautiful QuickShell-based desktop shell
+         This will:
+         • Download and build AUR dependencies (quickshell-git, etc.)
+         • Build aura-cli from source
+         • Build aura-shell from source
+         • Takes 10-30 minutes depending on your system
 
-      ⚡ All AUR dependencies are pre-installed from the ISO!
-      ⚡ This only takes a few minutes to build and install!
+         STEP 2: Switch to Hyprland session
+         ───────────────────────────────────
+         After install-aura-full completes:
+         1. Log out (top-right corner → Power → Log Out)
+         2. At GDM login screen, click the gear icon ⚙️
+         3. Select "Hyprland (UWSM)"
+         4. Log back in
+
+         ✨ Welcome to the beautiful Aura Hyprland desktop!
 
      ┌─────────────────────────────────────────────────────────────────┐
      │                     Essential Keybindings                       │
@@ -41,15 +53,20 @@ cat << 'EOF'
        SUPER + V            Toggle floating
 
      ┌─────────────────────────────────────────────────────────────────┐
-     │ Getting Started                                                  │
+     │ Session Switching                                                │
      └─────────────────────────────────────────────────────────────────┘
 
-     1. Run 'install-aura-full' to build aura-cli and aura-shell
-     2. Restart Hyprland (SUPER + SHIFT + E) after installation
-     3. Explore your pre-configured Hyprland setup
-     4. Check ~/.config/ for all your configurations
-     5. Run 'fastfetch' to see system info
-     6. Run 'btop' for system monitoring
+     You have two desktop sessions available:
+
+     • GNOME - Safe fallback session (current)
+       - Use for initial setup and package installation
+       - Use if Hyprland has issues
+
+     • Hyprland (UWSM) - Beautiful Aura desktop
+       - Switch to this after running install-aura-full
+       - Main desktop experience with all customizations
+
+     To switch sessions: Log out → Click gear icon at login → Select session
 
      ┌─────────────────────────────────────────────────────────────────┐
      │ Useful Commands                                                  │
