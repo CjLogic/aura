@@ -1,12 +1,25 @@
 stop_install_log
 
 echo_in_style() {
-  echo "$1" | tte --canvas-width 0 --anchor-text c --frame-rate 640 print
+  if command -v tte &>/dev/null; then
+    echo "$1" | tte --canvas-width 0 --anchor-text c --frame-rate 640 print
+  else
+    echo "$1"
+  fi
 }
 
 clear
 echo
-tte -i ~/.local/share/aura/logo.txt --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
+if command -v tte &>/dev/null && [ -f ~/.local/share/aura/logo.txt ]; then
+  tte -i ~/.local/share/aura/logo.txt --canvas-width 0 --anchor-text c --frame-rate 920 laseretch
+else
+  echo "  █████╗ ██╗   ██╗██████╗  █████╗ "
+  echo " ██╔══██╗██║   ██║██╔══██╗██╔══██╗"
+  echo " ███████║██║   ██║██████╔╝███████║"
+  echo " ██╔══██║██║   ██║██╔══██╗██╔══██║"
+  echo " ██║  ██║╚██████╔╝██║  ██║██║  ██║"
+  echo " ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝"
+fi
 echo
 
 # Display installation time if available

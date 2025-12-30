@@ -111,27 +111,38 @@ end
 
 echo
 
-# Install AUR dependencies
-log "Installing AUR dependencies..."
-echo "This may take a while as packages are built from source..."
-echo
+# Check AUR dependencies (skip if already installed during ISO installation)
+log "Checking AUR dependencies..."
 
 set aur_packages_file $HOME/.local/share/aura/install/aura-aur.packages
 
 if test -f $aur_packages_file
     # Read packages from file (filter comments and blank lines)
-    set aur_packages (grep -v '^#' $aur_packages_file | grep -v '^$')
+    set all_aur_packages (grep -v '^#' $aur_packages_file | grep -v '^$')
 
-    log "Installing "(count $aur_packages)" AUR packages..."
-
-    # Install all packages
-    $aur_helper -S --needed --removemake --cleanafter $noconfirm $aur_packages
-    or begin
-        error "Some AUR packages failed to install"
-        echo "Continuing anyway..."
+    # Filter out already-installed packages
+    set aur_packages
+    for pkg in $all_aur_packages
+        if not pacman -Q $pkg &>/dev/null
+            set -a aur_packages $pkg
+        end
     end
 
-    success "AUR dependencies installed!"
+    if test (count $aur_packages) -gt 0
+        log "Installing "(count $aur_packages)" missing AUR packages..."
+        echo "This may take a while as packages are built from source..."
+
+        # Install missing packages
+        $aur_helper -S --needed --removemake --cleanafter $noconfirm $aur_packages
+        or begin
+            error "Some AUR packages failed to install"
+            echo "Continuing anyway..."
+        end
+
+        success "AUR dependencies installed!"
+    else
+        success "All AUR dependencies already installed!"
+    end
 else
     error "aura-aur.packages not found at $aur_packages_file"
     echo "You may need to install dependencies manually"
