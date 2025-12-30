@@ -7,8 +7,36 @@ echo "Setting up GDM display manager..."
 sudo systemctl disable sddm.service 2>/dev/null || true
 sudo systemctl mask sddm.service 2>/dev/null || true
 
-# Enable GDM
-sudo systemctl enable gdm.service
+# CRITICAL: Unmask plymouth-quit services to allow proper transition to GDM
+# If these are masked, Plymouth will hang and show a login prompt instead of GDM
+sudo systemctl unmask plymouth-quit.service 2>/dev/null || true
+sudo systemctl unmask plymouth-quit-wait.service 2>/dev/null || true
+
+# Remove any custom plymouth-quit overrides that delay it
+sudo rm -f /etc/systemd/system/plymouth-quit.service.d/wait-for-graphical.conf 2>/dev/null || true
+
+# Set default systemd target to graphical (required for GDM to auto-start)
+sudo systemctl set-default graphical.target
+
+# Sync package database and upgrade system
+echo "Syncing package database..."
+sudo pacman -Syyu --noconfirm
+
+# Ensure GDM is installed before enabling
+if ! pacman -Q gdm &>/dev/null; then
+    echo "⚠️  GDM not installed, installing now..."
+    sudo pacman -S --noconfirm --needed gdm
+fi
+
+# Enable GDM (only if the service file exists)
+if [ -f /usr/lib/systemd/system/gdm.service ]; then
+    sudo systemctl enable gdm.service
+else
+    echo "⚠️  GDM service file not found, skipping enable (will be enabled on first boot)"
+fi
+
+# Reload systemd to pick up changes
+sudo systemctl daemon-reload
 
 # Create Hyprland session file for GDM
 sudo mkdir -p /usr/share/wayland-sessions

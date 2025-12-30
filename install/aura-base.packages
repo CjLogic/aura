@@ -165,7 +165,6 @@ ffmpegthumbnailer
 
 # === Security ===
 ufw
-# ufw-docker - moved to aura-aur.packages (AUR package)
 
 # === Boot & System ===
 plymouth

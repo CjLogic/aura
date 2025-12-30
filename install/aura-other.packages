@@ -58,6 +58,7 @@ gnome-control-center
 gnome-terminal
 gnome-text-editor
 gnome-session
+gnome-shell-extensions
 
 # T2 MacBook support packages (disabled - not needed)
 # apple-bcm-firmware

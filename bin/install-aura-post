@@ -139,6 +139,16 @@ end
 
 echo
 
+# Install build dependencies for aura-cli
+log "Installing build dependencies for aura-cli (python-build, python-installer, hatchling)..."
+sudo pacman -S --noconfirm --needed python-build python-installer python-hatchling python-hatch-vcs
+or begin
+    error "Failed to install Python build dependencies"
+    echo "aura-cli build will likely fail without these packages"
+end
+
+echo
+
 # Build aura-cli
 log "Building aura-cli..."
 cd $HOME/.local/src/aura-cli
@@ -165,6 +175,16 @@ if not set -q cli_failed
     or true
 
     success "aura-cli installed successfully!"
+end
+
+echo
+
+# Install build dependencies for aura-shell
+log "Installing build dependencies for aura-shell (cmake, ninja)..."
+sudo pacman -S --noconfirm --needed cmake ninja
+or begin
+    error "Failed to install build dependencies"
+    echo "aura-shell build will likely fail without cmake and ninja"
 end
 
 echo
