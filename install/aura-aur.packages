@@ -19,7 +19,6 @@ qqc2-desktop-style5
 # === Python Build Tools (AUR) ===
 python-build
 python-installer
-python-terminaltexteffects
 
 # === Applications (AUR) ===
 localsend

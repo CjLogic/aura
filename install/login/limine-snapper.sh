@@ -1,5 +1,9 @@
 if command -v limine &>/dev/null; then
-  sudo pacman -S --noconfirm --needed limine-snapper-sync limine-mkinitcpio-hook
+  # Try to install limine tools (limine-snapper-sync may not be available)
+  sudo pacman -S --noconfirm --needed limine-mkinitcpio-hook 2>/dev/null || true
+  sudo pacman -S --noconfirm --needed limine-snapper-sync 2>/dev/null || {
+    echo "⚠️  limine-snapper-sync not available, using basic limine config"
+  }
 
   sudo tee /etc/mkinitcpio.conf.d/aura_hooks.conf <<EOF >/dev/null
 HOOKS=(base udev plymouth keyboard autodetect microcode modconf kms keymap consolefont block encrypt filesystems fsck btrfs-overlayfs)
@@ -123,7 +127,41 @@ fi
 
 echo "mkinitcpio hooks re-enabled"
 
-sudo limine-update
+# Run limine-update to generate boot entries (if available)
+if command -v limine-update &>/dev/null; then
+  echo "Running limine-update to generate boot entries..."
+  sudo limine-update || echo "⚠️  limine-update failed, creating manual entry..."
+else
+  echo "⚠️  limine-update not found, creating manual boot entry..."
+fi
+
+# Verify limine.conf has entries, create manual entry if missing
+if ! grep -q "^:" /boot/limine.conf 2>/dev/null; then
+  echo "No boot entries found, adding manual entry..."
+
+  # Get root partition UUID
+  ROOT_UUID=$(findmnt -n -o UUID /)
+  KERNEL_VERSION=$(ls /boot/vmlinuz-* 2>/dev/null | head -1 | sed 's/.*vmlinuz-//')
+
+  # Only create entry if we found a kernel
+  if [[ -n "$KERNEL_VERSION" ]] && [[ -n "$ROOT_UUID" ]]; then
+    # Add a basic boot entry
+    sudo tee -a /boot/limine.conf <<EOF
+
+:Aura Linux
+    protocol: linux
+    kernel_path: boot():/vmlinuz-${KERNEL_VERSION}
+    cmdline: root=UUID=${ROOT_UUID} rw quiet splash
+    module_path: boot():/initramfs-${KERNEL_VERSION}.img
+EOF
+
+    echo "✅ Manual boot entry created for kernel ${KERNEL_VERSION}"
+  else
+    echo "❌ ERROR: Could not detect kernel or root UUID"
+    echo "   Kernel: ${KERNEL_VERSION:-not found}"
+    echo "   Root UUID: ${ROOT_UUID:-not found}"
+  fi
+fi
 
 if [[ -n $EFI ]] && efibootmgr &>/dev/null; then
     # Remove the archinstall-created Limine entry
@@ -131,19 +169,3 @@ if [[ -n $EFI ]] && efibootmgr &>/dev/null; then
     sudo efibootmgr -b "$bootnum" -B >/dev/null 2>&1
   done < <(efibootmgr | grep -E "^Boot[0-9]{4}\*? Arch Linux Limine" | sed 's/^Boot\([0-9]\{4\}\).*/\1/')
 fi
-
-# Move this to a utility to allow manual activation
-# if [[ -n $EFI ]] && efibootmgr &>/dev/null &&
-#   ! cat /sys/class/dmi/id/bios_vendor 2>/dev/null | grep -qi "American Megatrends" &&
-#   ! cat /sys/class/dmi/id/bios_vendor 2>/dev/null | grep -qi "Apple"; then
-#
-#   uki_file=$(find /boot/EFI/Linux/ -name "aura*.efi" -printf "%f\n" 2>/dev/null | head -1)
-#
-#   if [[ -n "$uki_file" ]]; then
-#     sudo efibootmgr --create \
-#       --disk "$(findmnt -n -o SOURCE /boot | sed 's/p\?[0-9]*$//')" \
-#       --part "$(findmnt -n -o SOURCE /boot | grep -o 'p\?[0-9]*$' | sed 's/^p//')" \
-#       --label "Aura" \
-#       --loader "\\EFI\\Linux\\$uki_file"
-#   fi
-# fi

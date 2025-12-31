@@ -1,11 +1,38 @@
+# Packages installed outside of install/packages.sh or optional packages
 # Utilized by ISO builder to ensure package availability in the ISO
 
+gcc
+make
+autoconf-archive
+base
+base-devel
+broadcom-wl
+btrfs-progs
+cmake
+go
+dart
+dkms
+doxygen
+egl-wayland
+curl
+git
+gst-plugin-pipewire
+gtk4-layer-shell
+htop
+intltool
+iwd
+jdk-openjdk
+libpulse
+libsass
+libva-intel-driver
+libva-nvidia-driver
 limine
 limine-mkinitcpio-hook
 limine-snapper-sync
 linux
 linux-firmware
 linux-headers
+macbook12-spi-driver-dkms
 nvidia-dkms
 nvidia-open-dkms
 nvidia-utils
