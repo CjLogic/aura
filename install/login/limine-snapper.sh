@@ -1,8 +1,5 @@
 if command -v limine &>/dev/null; then
-  # Try to install limine tools (may not be available)
-  sudo pacman -S --noconfirm --needed limine-snapper-sync limine-mkinitcpio-hook 2>/dev/null || {
-    echo "⚠️  limine-snapper-sync not available, using basic limine config"
-  }
+  sudo pacman -S --noconfirm --needed limine-snapper-sync limine-mkinitcpio-hook
 
   sudo tee /etc/mkinitcpio.conf.d/aura_hooks.conf <<EOF >/dev/null
 HOOKS=(base udev plymouth keyboard autodetect microcode modconf kms keymap consolefont block encrypt filesystems fsck btrfs-overlayfs)
@@ -126,34 +123,7 @@ fi
 
 echo "mkinitcpio hooks re-enabled"
 
-# Run limine-update to generate boot entries (if available)
-if command -v limine-update &>/dev/null; then
-  echo "Running limine-update to generate boot entries..."
-  sudo limine-update || echo "⚠️  limine-update failed, creating manual entry..."
-else
-  echo "⚠️  limine-update not found, creating manual boot entry..."
-fi
-
-# Verify limine.conf has entries, create manual entry if missing
-if ! grep -q "^:" /boot/limine.conf 2>/dev/null; then
-  echo "No boot entries found, adding manual entry..."
-
-  # Get root partition UUID
-  ROOT_UUID=$(findmnt -n -o UUID /)
-  KERNEL_VERSION=$(ls /boot/vmlinuz-* | head -1 | sed 's/.*vmlinuz-//')
-
-  # Add a basic boot entry
-  sudo tee -a /boot/limine.conf <<EOF
-
-:Aura Linux
-    protocol: linux
-    kernel_path: boot():/vmlinuz-${KERNEL_VERSION}
-    cmdline: root=UUID=${ROOT_UUID} rw quiet splash
-    module_path: boot():/initramfs-${KERNEL_VERSION}.img
-EOF
-
-  echo "✅ Manual boot entry created"
-fi
+sudo limine-update
 
 if [[ -n $EFI ]] && efibootmgr &>/dev/null; then
     # Remove the archinstall-created Limine entry
