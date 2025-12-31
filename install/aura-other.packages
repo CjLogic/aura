@@ -1,13 +1,28 @@
-# AUR packages installed post-boot with yay
-# These are not available in official repositories
+# Utilized by ISO builder to ensure package availability in the ISO
 
-# Debug tools
+limine
+limine-mkinitcpio-hook
+limine-snapper-sync
+linux
+linux-firmware
+linux-headers
+nvidia-dkms
+nvidia-open-dkms
+nvidia-utils
+lib32-nvidia-utils
+pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
+qt6-wayland
+sassc
+snapper
+webp-pixbuf-loader
+wget
 yay-debug
+zram-generator
 
-# Hardware support
-macbook12-spi-driver-dkms
-
-# T2 MacBook support packages (disabled - uncomment if needed)
+# T2 MacBook support packages (disabled - not needed)
 # apple-bcm-firmware
 # apple-t2-audio-config
 # linux-t2

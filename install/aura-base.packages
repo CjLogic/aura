@@ -200,20 +200,11 @@ git
 intltool
 jdk-openjdk
 libsass
-sassc
 wget
 
 # === System Core ===
 btrfs-progs
 iwd
-linux
-linux-firmware
-linux-headers
-limine
-limine-mkinitcpio-hook
-limine-snapper-sync
-snapper
-zram-generator
 
 # === Graphics & Media ===
 egl-wayland
