@@ -198,4 +198,5 @@ gnome-text-editor
 gnome-session
 gnome-shell-extensions
 gnome-settings-daemon
+mutter
 timeshift

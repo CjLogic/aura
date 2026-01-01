@@ -172,9 +172,16 @@ end
 
 if not set -q cli_failed
     log "Installing aura-cli..."
-    sudo python -m installer dist/*.whl
-    or begin
-        error "Failed to install aura-cli"
+    # Find the wheel file (Fish doesn't expand * in command arguments)
+    set wheel_file (ls dist/*.whl 2>/dev/null | head -1)
+    if test -n "$wheel_file"
+        sudo python -m installer "$wheel_file"
+        or begin
+            error "Failed to install aura-cli"
+            set cli_failed true
+        end
+    else
+        error "No wheel file found in dist/"
         set cli_failed true
     end
 end
@@ -204,7 +211,13 @@ echo
 log "Building aura-shell..."
 cd $HOME/.config/quickshell/aura
 
-cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/ -DINSTALL_QSCONFDIR=~/.config/quickshell/aura
+# Set VERSION and GIT_REVISION since this isn't a git repo
+cmake -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/ \
+    -DINSTALL_QSCONFDIR=~/.config/quickshell/aura \
+    -DVERSION=1.0.0 \
+    -DGIT_REVISION=installed
 or begin
     error "Failed to configure aura-shell build"
     set shell_failed true
