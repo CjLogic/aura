@@ -60,11 +60,11 @@ log "Checking for source code..."
 set cli_exists false
 set shell_exists false
 
-if test -d $HOME/.local/src/aura-cli
-    success "aura-cli source found at ~/.local/src/aura-cli"
+if test -d $HOME/.local/share/aura-cli
+    success "aura-cli source found at ~/.local/share/aura-cli"
     set cli_exists true
 else
-    error "aura-cli source NOT found at ~/.local/src/aura-cli"
+    error "aura-cli source NOT found at ~/.local/share/aura-cli"
 end
 
 if test -d $HOME/.config/quickshell/aura
@@ -162,7 +162,7 @@ echo
 
 # Build aura-cli
 log "Building aura-cli..."
-cd $HOME/.local/src/aura-cli
+cd $HOME/.local/share/aura-cli
 
 python -m build --wheel
 or begin
@@ -198,14 +198,14 @@ end
 echo
 
 # Install build dependencies for aura-shell
-log "Installing build dependencies for aura-shell (cmake, ninja)..."
-sudo pacman -S --noconfirm --needed cmake ninja
-or begin
-    error "Failed to install build dependencies"
-    echo "aura-shell build will likely fail without cmake and ninja"
-end
+# log "Installing build dependencies for aura-shell (cmake, ninja)..."
+# sudo pacman -S --noconfirm --needed cmake ninja
+# or begin
+#     error "Failed to install build dependencies"
+#     echo "aura-shell build will likely fail without cmake and ninja"
+# end
 
-echo
+# echo
 
 # Build aura-shell
 log "Building aura-shell..."
