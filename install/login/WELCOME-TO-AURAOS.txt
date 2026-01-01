@@ -22,7 +22,7 @@
      └─────────────────────────────────────────────────────────────────┘
 
      1. Explore your pre-configured Hyprland setup
-     2. Check ~/.config/ for Aura-Dots configurations
+     2. Check ~/.config/ for Aura configurations
      3. Run 'fastfetch' to see system info
      4. Run 'btop' for system monitoring
 
@@ -39,7 +39,7 @@
      │ Support & Documentation                                          │
      └─────────────────────────────────────────────────────────────────┘
 
-       Aura-Dots:  https://github.com/CjLogic/Aura-Dots
+       Aura:  https://github.com/CjLogic/Aura
        Arch Wiki:  https://wiki.archlinux.org
 
      Enjoy your beautiful new desktop environment! ✨

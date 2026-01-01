@@ -314,10 +314,10 @@ if ! test -f $state/aura/scheme.json
     end
 end
 
-# Add Aura-Dots bin to PATH
-log 'Adding Aura-Dots bin to PATH...'
-set -gx AURA_DOTS_PATH (dirname (status filename))
-fish_add_path "$AURA_DOTS_PATH/bin"
+# Add Aura bin to PATH
+log 'Adding Aura bin to PATH...'
+set -gx AURA_PATH (dirname (status filename))
+fish_add_path "$AURA_PATH/bin"
 
 # Start the shell daemon
 if command -v aura >/dev/null 2>&1

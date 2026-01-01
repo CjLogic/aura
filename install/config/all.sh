@@ -1,5 +1,5 @@
 run_logged $AURA_INSTALL/config/config.sh
-# run_logged $AURA_INSTALL/config/theme.sh  # Disabled - Aura-Dots handles theming and config symlinking
+# run_logged $AURA_INSTALL/config/theme.sh  # Disabled - Aura handles theming and config symlinking
 run_logged $AURA_INSTALL/config/branding.sh
 run_logged $AURA_INSTALL/config/git.sh
 run_logged $AURA_INSTALL/config/gpg.sh

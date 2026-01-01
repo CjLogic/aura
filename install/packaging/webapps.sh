@@ -1,6 +1,3 @@
-aura-webapp-install "HEY" https://app.hey.com HEY.png "aura-webapp-handler-hey %u" "x-scheme-handler/mailto"
-aura-webapp-install "Basecamp" https://launchpad.37signals.com Basecamp.png
-aura-webapp-install "WhatsApp" https://web.whatsapp.com/ WhatsApp.png
 aura-webapp-install "Google Photos" https://photos.google.com/ "Google Photos.png"
 aura-webapp-install "Google Contacts" https://contacts.google.com/ "Google Contacts.png"
 aura-webapp-install "Google Messages" https://messages.google.com/web/conversations "Google Messages.png"
