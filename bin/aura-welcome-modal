@@ -1,0 +1,180 @@
+#!/bin/bash
+# Display welcome modal for first-time users
+
+# Welcome content
+gum style \
+    --foreground 212 --border-foreground 212 --border double \
+    --align center --width 80 --margin "1 2" --padding "1 4" \
+    "Welcome to AuraOS!" \
+    "Beautiful Aesthetics Meets Powerful Dev Tools"
+
+echo
+
+gum style \
+    --foreground 14 --bold \
+    "🎉 CONGRATULATIONS! Your AuraOS installation is complete!"
+
+echo
+
+# Important setup instructions
+gum style \
+    --foreground 11 --border-foreground 11 --border rounded \
+    --width 76 --margin "0 2" --padding "1 2" \
+    "IMPORTANT: Setup Instructions"
+
+echo
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "You are currently in GNOME (backup session). To get the full" \
+    "Aura Hyprland experience, follow these steps:"
+
+echo
+
+# STEP 1
+gum style \
+    --foreground 10 --bold \
+    "STEP 1: Install Aura components"
+
+gum style \
+    --foreground 8 --width 76 --margin "0 4" \
+    "─────────────────────────────────"
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "Run this command to install aura-cli and aura-shell:"
+
+echo
+gum style \
+    --foreground 14 --background 236 --padding "0 2" --margin "0 4" \
+    "install-aura-full"
+
+echo
+
+gum style \
+    --foreground 243 --width 76 --margin "0 2" \
+    "This will:" \
+    "  • Download and build AUR dependencies (quickshell-git, etc.)" \
+    "  • Build aura-cli from source" \
+    "  • Build aura-shell from source" \
+    "  • Takes 10-30 minutes depending on your system"
+
+echo
+
+# STEP 2
+gum style \
+    --foreground 10 --bold \
+    "STEP 2: Switch to Hyprland session"
+
+gum style \
+    --foreground 8 --width 76 --margin "0 4" \
+    "─────────────────────────────────"
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "After install-aura-full completes:" \
+    "  1. Log out (top-right corner → Power → Log Out)" \
+    "  2. At GDM login screen, click the gear icon ⚙️" \
+    "  3. Select \"Hyprland (UWSM)\"" \
+    "  4. Log back in"
+
+echo
+
+gum style \
+    --foreground 13 --bold --italic \
+    "✨ Welcome to the beautiful Aura Hyprland desktop!"
+
+echo
+
+# Essential keybindings
+gum style \
+    --foreground 11 --border-foreground 11 --border rounded \
+    --width 76 --margin "0 2" --padding "1 2" \
+    "Essential Keybindings"
+
+echo
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "  SUPER + RETURN        Open terminal" \
+    "  SUPER + SPACE         Application launcher (walker)" \
+    "  SUPER + Q             Close window" \
+    "  SUPER + 1-9           Switch workspaces" \
+    "  SUPER + SHIFT + 1-9   Move window to workspace" \
+    "  SUPER + F             Toggle fullscreen" \
+    "  SUPER + V             Toggle floating"
+
+echo
+
+# Session info
+gum style \
+    --foreground 11 --border-foreground 11 --border rounded \
+    --width 76 --margin "0 2" --padding "1 2" \
+    "Session Switching"
+
+echo
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "You have two desktop sessions available:" \
+    "" \
+    "  • GNOME - Safe fallback session (current)" \
+    "    - Use for initial setup and package installation" \
+    "    - Use if Hyprland has issues" \
+    "" \
+    "  • Hyprland (UWSM) - Beautiful Aura desktop" \
+    "    - Switch to this after running install-aura-full" \
+    "    - Main desktop experience with all customizations"
+
+echo
+
+gum style \
+    --foreground 243 --italic --width 76 --margin "0 2" \
+    "To switch sessions: Log out → Click gear icon at login → Select session"
+
+echo
+
+# Useful commands
+gum style \
+    --foreground 11 --border-foreground 11 --border rounded \
+    --width 76 --margin "0 2" --padding "1 2" \
+    "Useful Commands"
+
+echo
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "  fastfetch       Display system information" \
+    "  btop            Interactive process viewer" \
+    "  lazygit         Terminal UI for git" \
+    "  lazydocker      Terminal UI for docker"
+
+echo
+
+# Support
+gum style \
+    --foreground 243 --width 76 --margin "0 2" \
+    "Support & Documentation:" \
+    "  Aura: https://github.com/CjLogic/Aura" \
+    "  Arch Wiki: https://wiki.archlinux.org"
+
+echo
+echo
+
+gum style \
+    --foreground 212 --bold --align center \
+    "Enjoy your beautiful new desktop environment! ✨"
+
+echo
+echo
+
+# Wait for user to press any key
+gum style \
+    --foreground 8 --italic --align center \
+    "Press any key to close this window..."
+
+read -n 1 -s
+
+# Mark welcome as shown
+mkdir -p ~/.local/state/aura
+touch ~/.local/state/aura/welcome-shown

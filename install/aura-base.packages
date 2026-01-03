@@ -108,6 +108,7 @@ gcc-libs
 swappy
 libqalculate
 qt6-base
+cmake
 
 # === Aura CLI Deps ===
 libnotify
@@ -147,7 +148,10 @@ noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
 noto-fonts-extra
+ttf-cascadia-code-nerd
 ttf-cascadia-mono-nerd
+ttf-jetbrains-mono-nerd
+ttf-material-symbols-variable
 woff2-font-awesome
 fontconfig
 

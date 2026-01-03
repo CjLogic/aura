@@ -5,6 +5,7 @@
 quickshell-git
 app2unit
 libcava
+ttf-rubik-vf
 
 # === Aura CLI AUR Deps ===
 xdg-terminal-exec
