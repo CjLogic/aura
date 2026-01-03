@@ -95,8 +95,8 @@ echo
 
 gum style \
     --foreground 15 --width 76 --margin "0 2" \
-    "  SUPER + RETURN        Open terminal" \
-    "  SUPER + SPACE         Application launcher (walker)" \
+    "  SUPER + T        Open terminal" \
+    "  SUPER         Application launcher" \
     "  SUPER + Q             Close window" \
     "  SUPER + 1-9           Switch workspaces" \
     "  SUPER + SHIFT + 1-9   Move window to workspace" \
