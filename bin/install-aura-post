@@ -172,11 +172,15 @@ end
 
 if not set -q cli_failed
     log "Installing aura-cli..."
-    # Find the wheel file (Fish doesn't expand * in command arguments)
-    set wheel_file (ls dist/*.whl 2>/dev/null | head -1)
-    if test -n "$wheel_file"
+    # Find the wheel file using Fish glob
+    set wheel_files dist/*.whl
+
+    if test -e $wheel_files[1]
+        # Use the first wheel file found
+        log "Found wheel file: $wheel_files[1]"
+
         # Use pip to install the wheel, which will also install dependencies
-        sudo pip install --break-system-packages "$wheel_file"
+        sudo pip install --break-system-packages $wheel_files[1]
         or begin
             error "Failed to install aura-cli"
             set cli_failed true
@@ -308,10 +312,10 @@ echo
 # Next steps
 if not set -q cli_failed; and not set -q shell_failed
     log "Next steps:"
-    echo "  1. Log out from GNOME (top-right → Power → Log Out)"
-    echo "  2. At GDM login screen, click the gear icon ⚙️"
-    echo "  3. Select 'Hyprland (UWSM)'"
-    echo "  4. Log back in and enjoy Aura! ✨"
+    echo "  1. Log out from Hyprland (SUPER + SHIFT + Q or top menu)"
+    echo "  2. Log back in at GDM"
+    echo "  3. The full Aura shell will now be active!"
+    echo "  4. Enjoy Aura! ✨"
 else
     error "Some components failed to install."
     echo

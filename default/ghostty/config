@@ -1,9 +1,13 @@
 # Dynamic theme colors
 
+# Fish Shell
+shell-integration = fish
+command = /usr/bin/fish -i
+
 # Font
 font-family = "JetBrainsMono Nerd Font"
 font-style = Regular
-font-size = 9
+font-size = 14
 
 # Window
 window-theme = ghostty

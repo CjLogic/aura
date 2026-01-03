@@ -17,5 +17,5 @@ if [[ -f "$FIRST_RUN_MODE" ]]; then
 
   bash "$AURA_PATH/install/first-run/refresh-database.sh"
   bash "$AURA_PATH/install/first-run/welcome.sh"
-  bash "$AURA_PATH/install/first-run/wifi.sh"
+  bash "$AURA_PATH/install/first-run/aura-fish-shell.sh"
 fi

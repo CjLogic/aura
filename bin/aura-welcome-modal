@@ -26,8 +26,8 @@ echo
 
 gum style \
     --foreground 15 --width 76 --margin "0 2" \
-    "You are currently in GNOME (backup session). To get the full" \
-    "Aura Hyprland experience, follow these steps:"
+    "You are currently in Aura Hyprland! The beautiful desktop" \
+    "environment is ready, but you need to install the Aura components."
 
 echo
 
@@ -42,12 +42,12 @@ gum style \
 
 gum style \
     --foreground 15 --width 76 --margin "0 2" \
-    "Run this command to install aura-cli and aura-shell:"
+    "The welcome prompt will ask if you want to install now."
 
 echo
 gum style \
     --foreground 14 --background 236 --padding "0 2" --margin "0 4" \
-    "install-aura-full"
+    "Choose 'Yes, install now' or run: install-aura-full"
 
 echo
 
@@ -64,7 +64,7 @@ echo
 # STEP 2
 gum style \
     --foreground 10 --bold \
-    "STEP 2: Switch to Hyprland session"
+    "STEP 2: Restart Hyprland session"
 
 gum style \
     --foreground 8 --width 76 --margin "0 4" \
@@ -73,16 +73,15 @@ gum style \
 gum style \
     --foreground 15 --width 76 --margin "0 2" \
     "After install-aura-full completes:" \
-    "  1. Log out (top-right corner → Power → Log Out)" \
-    "  2. At GDM login screen, click the gear icon ⚙️" \
-    "  3. Select \"Hyprland (UWSM)\"" \
-    "  4. Log back in"
+    "  1. Log out (SUPER + SHIFT + Q or top menu)" \
+    "  2. Log back in at GDM" \
+    "  3. The full Aura shell will now be active!"
 
 echo
 
 gum style \
     --foreground 13 --bold --italic \
-    "✨ Welcome to the beautiful Aura Hyprland desktop!"
+    "✨ Enjoy the beautiful Aura Hyprland desktop!"
 
 echo
 
@@ -106,31 +105,28 @@ gum style \
 
 echo
 
-# Session info
+# Advanced info
 gum style \
     --foreground 11 --border-foreground 11 --border rounded \
     --width 76 --margin "0 2" --padding "1 2" \
-    "Session Switching"
+    "For Beginners: Optional GNOME Fallback"
 
 echo
 
 gum style \
     --foreground 15 --width 76 --margin "0 2" \
-    "You have two desktop sessions available:" \
+    "If you prefer a GNOME fallback session:" \
     "" \
-    "  • GNOME - Safe fallback session (current)" \
-    "    - Use for initial setup and package installation" \
-    "    - Use if Hyprland has issues" \
-    "" \
-    "  • Hyprland (UWSM) - Beautiful Aura desktop" \
-    "    - Switch to this after running install-aura-full" \
-    "    - Main desktop experience with all customizations"
+    "  1. Before building ISO: Uncomment GNOME packages in" \
+    "     aura/install/aura-base.packages" \
+    "  2. Build ISO with GNOME included" \
+    "  3. Log out and select GNOME at GDM"
 
 echo
 
 gum style \
     --foreground 243 --italic --width 76 --margin "0 2" \
-    "To switch sessions: Log out → Click gear icon at login → Select session"
+    "Note: Hyprland is the default and recommended session"
 
 echo
 
@@ -168,13 +164,71 @@ gum style \
 echo
 echo
 
-# Wait for user to press any key
+# Ask if user wants to run install-aura-full now
 gum style \
-    --foreground 8 --italic --align center \
-    "Press any key to close this window..."
+    --foreground 11 --bold --align center \
+    "Would you like to install Aura components now?"
 
-read -n 1 -s
+echo
 
-# Mark welcome as shown
-mkdir -p ~/.local/state/aura
-touch ~/.local/state/aura/welcome-shown
+gum style \
+    --foreground 243 --italic --align center \
+    "This will run 'install-aura-full' to build aura-cli and aura-shell"
+
+echo
+
+# Use gum confirm for yes/no choice
+if gum confirm "Start installation now?" --affirmative "Yes, install now" --negative "No, I'll do it later"; then
+    echo
+    gum style \
+        --foreground 10 --bold --align center \
+        "Starting installation..."
+
+    echo
+    sleep 1
+
+    # Mark welcome as shown
+    mkdir -p ~/.local/state/aura
+    touch ~/.local/state/aura/welcome-shown
+
+    # Run install-aura-full
+    if command -v install-aura-full &>/dev/null; then
+        clear
+        install-aura-full
+    else
+        echo
+        gum style \
+            --foreground 9 --bold \
+            "ERROR: install-aura-full command not found!"
+        echo
+        gum style \
+            --foreground 243 \
+            "Please ensure Aura is properly installed and try again."
+        echo
+        echo
+        read -n 1 -s -p "Press any key to close..."
+    fi
+else
+    echo
+    gum style \
+        --foreground 14 --align center \
+        "No problem! You can install later by running:"
+
+    echo
+    gum style \
+        --foreground 14 --background 236 --padding "0 2" --align center \
+        "install-aura-full"
+
+    echo
+    echo
+
+    gum style \
+        --foreground 8 --italic --align center \
+        "Press any key to close this window..."
+
+    read -n 1 -s
+
+    # Mark welcome as shown
+    mkdir -p ~/.local/state/aura
+    touch ~/.local/state/aura/welcome-shown
+fi

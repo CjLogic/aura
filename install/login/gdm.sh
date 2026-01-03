@@ -1,5 +1,5 @@
 # Setup GDM as display manager
-# GDM works great with both GNOME and Hyprland sessions
+# GDM works great with Hyprland (and GNOME if you uncomment those packages)
 
 echo "Setting up GDM display manager..."
 
@@ -33,12 +33,4 @@ Type=Application
 DesktopNames=Hyprland
 EOF
 
-echo "✅ GDM configured"
-echo "   Available sessions:"
-echo "   - Hyprland (UWSM)"
-echo "   - GNOME"
-echo ""
-echo "After installation:"
-echo "   1. Boot into GNOME session (safest for first boot)"
-echo "   2. Open terminal and run: install-aura-full"
-echo "   3. Log out and select Hyprland (UWSM) session"
+echo "✅ GDM configured with Hyprland session"

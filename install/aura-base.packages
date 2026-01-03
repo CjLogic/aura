@@ -1,6 +1,10 @@
 # Aura core package list - dev tools + Aura essentials
 # This file is used by the ISO builder when determining needs
 
+# === Build Tools (required for AUR) ===
+git
+base-devel
+
 # === Shell & Terminal ===
 fish
 # foot
@@ -47,6 +51,7 @@ github-cli
 # === Dev Tools - Languages ===
 ruby
 rust
+rustup
 clang
 llvm
 luarocks
@@ -95,6 +100,7 @@ jq
 eza
 ttf-jetbrains-mono-nerd
 thunar
+yay
 
 
 # === Aura Shell Deps ===
@@ -177,6 +183,7 @@ wireless-regdb
 python-gobject
 python-poetry-core
 python-terminaltexteffects
+python-pip
 
 # === Aura Favs ===
 discover
@@ -190,17 +197,26 @@ python-gobject
 bolt
 expac
 
-# GNOME - Backup desktop session
+# === Display Manager ===
+gdm
+
+# === X Server (for compatibility) ===
 xorg
 xorg-server
+
+# === Desktop Portals ===
 xdg-desktop-portal-gnome
-gdm
-gnome-shell
-gnome-control-center
-gnome-terminal
-gnome-text-editor
-gnome-session
-gnome-shell-extensions
-gnome-settings-daemon
-mutter
+
+# === GNOME - Backup Desktop Session (optional for beginners) ===
+# Uncomment these packages if you want a GNOME fallback session
+# gnome-shell
+# gnome-control-center
+# gnome-terminal
+# gnome-text-editor
+# gnome-session
+# gnome-shell-extensions
+# gnome-settings-daemon
+# mutter
+
+# === Backup & Snapshots ===
 timeshift

@@ -4,8 +4,9 @@ function fish_greeting
     echo '      █████   ██    ██  ██████    █████        '
     echo '     ██   ██  ██    ██  ██   ██  ██   ██       '
     echo '     ███████  ██    ██  ██████   ███████       '
-    echo '     ██   ██  ██    ██  ██   ██  ██   ██       '
-    echo '     ██   ██   ██████   ██   ██  ██   ██       '
+    echo '     ██   ██  ██    ██  ██   ██  ██   ██ = Beautiful aesthetics '
+    echo '     ██   ██   ██████   ██   ██  ██   ██   meets powerful dev tools '
+
     set_color normal
     fastfetch --key-padding-left 5
 end
