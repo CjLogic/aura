@@ -1,5 +1,0 @@
-#!/bin/bash
-
-aura-refresh-config waybar/config.jsonc
-aura-refresh-config waybar/style.css
-aura-restart-waybar

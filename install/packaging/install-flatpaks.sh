@@ -9,21 +9,35 @@ if ! command -v flatpak &>/dev/null; then
   return 0
 fi
 
-# Initialize flatpak system directories if needed
-if [ ! -d "/var/lib/flatpak" ]; then
-  echo "Initializing flatpak system..."
-  sudo mkdir -p /var/lib/flatpak
+# Ensure D-Bus session is available
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+  echo "Starting D-Bus session for flatpak setup..."
+  eval $(dbus-launch --sh-syntax)
+  export DBUS_SESSION_BUS_ADDRESS
 fi
 
-# Add flathub repository if not already added
+# Initialize flatpak system directories
+echo "Initializing flatpak system..."
+sudo mkdir -p /var/lib/flatpak
+
+# Add flathub repository
 echo "Adding flathub repository..."
-flatpak remote-add --if-not-exists --system flathub https://flathub.org/repo/flathub.flatpakrepo || {
-  echo "⚠️  Failed to add flathub repository"
-  return 0
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>/dev/null || {
+  echo "⚠️  Failed to add flathub repository (may already exist or D-Bus issue)"
+  echo "   You can add it manually after first boot with:"
+  echo "   flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo"
 }
 
-echo "Installing flatpak applications..."
-flatpak install -y --system flathub com.visualstudio.code || echo "⚠️  Failed to install VS Code"
-flatpak install -y --system flathub org.localsend.localsend_app || echo "⚠️  Failed to install LocalSend"
+# Check if repository was added successfully
+if flatpak remotes 2>/dev/null | grep -q "flathub"; then
+  echo "✅ Flathub repository added successfully"
 
-echo "✅ Flatpak installation complete"
+  echo "Installing flatpak applications..."
+  sudo flatpak install -y flathub com.visualstudio.code 2>/dev/null || echo "⚠️  Failed to install VS Code (will be available for manual install)"
+  sudo flatpak install -y flathub org.localsend.localsend_app 2>/dev/null || echo "⚠️  Failed to install LocalSend (will be available for manual install)"
+else
+  echo "⚠️  Flathub repository not available"
+  echo "   Flatpak apps can be installed after first boot"
+fi
+
+echo "✅ Flatpak setup complete"

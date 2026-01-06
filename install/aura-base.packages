@@ -142,6 +142,7 @@ avahi
 nss-mdns
 
 # === System Services ===
+dbus
 polkit-gnome
 gnome-keyring
 libsecret
