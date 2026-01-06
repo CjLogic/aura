@@ -96,10 +96,12 @@ if ! pacman -Q $aur_helper &> /dev/null
     cd ..
     rm -rf $aur_helper
 
-    # Setup AUR helper
+    # Setup AUR helper with non-interactive defaults
     if test $aur_helper = yay
         $aur_helper -Y --gendb
         $aur_helper -Y --devel --save
+        # Configure yay to be non-interactive
+        $aur_helper -Y --answerclean All --answerdiff None --save
     else
         $aur_helper --gendb
     end
@@ -107,6 +109,10 @@ if ! pacman -Q $aur_helper &> /dev/null
     success "$aur_helper installed!"
 else
     log "$aur_helper is already installed"
+    # Ensure yay is configured to be non-interactive
+    if test $aur_helper = yay
+        $aur_helper -Y --answerclean All --answerdiff None --save
+    end
 end
 
 echo
@@ -313,7 +319,7 @@ echo
 if not set -q cli_failed; and not set -q shell_failed
     log "Next steps:"
     echo "  1. Log out from Hyprland (SUPER + SHIFT + Q or top menu)"
-    echo "  2. Log back in at GDM"
+    echo "  2. Log back in"
     echo "  3. The full Aura shell will now be active!"
     echo "  4. Enjoy Aura! ✨"
 else

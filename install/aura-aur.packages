@@ -17,14 +17,11 @@ qt6ct-kde
 google-breakpad
 qqc2-desktop-style5
 
-# === Python Build Tools (AUR) ===
-python-build
-python-installer
-
 # === Applications (AUR) ===
 localsend
+appimagelauncher
 todoist-appimage
-#zen-browser
+#helium-browser-bin
 i2c-tools
 ufw-docker
-gdm-settings
+python-materialyoucolor

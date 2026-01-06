@@ -1,12 +1,11 @@
 # Dynamic theme colors
 
-# Fish Shell
 shell-integration = fish
 command = /usr/bin/fish -i
 
 # Font
-font-family = "JetBrainsMono Nerd Font"
-font-style = Regular
+font-family = "JetBrainsMono Nerd Font Mono"
+font-style = SemiBold
 font-size = 14
 
 # Window
@@ -18,7 +17,7 @@ resize-overlay = never
 gtk-toolbar-style = flat
 
 # Cursor styling
-cursor-style = "block"
+cursor-style = "bar"
 cursor-style-blink = false
 
 # Cursor styling + SSH session terminfo
@@ -34,4 +33,4 @@ keybind = super+control+shift+alt+arrow_left=resize_split:left,100
 keybind = super+control+shift+alt+arrow_right=resize_split:right,100
 
 # Slowdown mouse scrolling
-mouse-scroll-multiplier = 0.95
+mouse-scroll-multiplier = 4

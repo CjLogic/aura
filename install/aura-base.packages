@@ -1,10 +1,6 @@
 # Aura core package list - dev tools + Aura essentials
 # This file is used by the ISO builder when determining needs
 
-# === Build Tools (required for AUR) ===
-git
-base-devel
-
 # === Shell & Terminal ===
 fish
 # foot
@@ -13,8 +9,11 @@ ghostty
 stow
 bash-completion
 bash
+curl
+wget
 
 # === System utilities ===
+htop
 bat
 btop
 dust
@@ -50,11 +49,11 @@ github-cli
 
 # === Dev Tools - Languages ===
 ruby
-rust
 rustup
 clang
 llvm
 luarocks
+go
 
 # === Dev Tools - Databases ===
 postgresql-libs
@@ -100,7 +99,8 @@ jq
 eza
 ttf-jetbrains-mono-nerd
 thunar
-yay
+gcc
+make
 
 
 # === Aura Shell Deps ===
@@ -111,7 +111,6 @@ aubio
 libpipewire
 qt6-declarative
 gcc-libs
-swappy
 libqalculate
 qt6-base
 cmake
@@ -127,7 +126,7 @@ glib2
 fuzzel
 ninja
 cliphist
-
+i2c-tools
 
 # === Display Protocols ===
 qt5-wayland
@@ -184,6 +183,7 @@ python-gobject
 python-poetry-core
 python-terminaltexteffects
 python-pip
+python-pillow
 
 # === Aura Favs ===
 discover
@@ -193,22 +193,30 @@ okular
 
 # === System Libraries ===
 libyaml
-python-gobject
 bolt
 expac
 
+# === AUR Package Runtime Dependencies ===
+# Dependencies needed by packages in aura-aur.packages
+libxpm
+nlohmann-json
+patchelf
+squashfuse
+kirigami2
+kiconthemes5
+sonnet5
+libayatana-appindicator
+
 # === Display Manager ===
-gdm
+sddm
 
 # === X Server (for compatibility) ===
-xorg
-xorg-server
-
-# === Desktop Portals ===
-xdg-desktop-portal-gnome
+#xorg
+#xorg-server
 
 # === GNOME - Backup Desktop Session (optional for beginners) ===
 # Uncomment these packages if you want a GNOME fallback session
+# xdg-desktop-portal-gnome
 # gnome-shell
 # gnome-control-center
 # gnome-terminal

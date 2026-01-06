@@ -9,6 +9,3 @@ if [ "$(plymouth-set-default-theme)" != "aura" ]; then
   sudo plymouth-set-default-theme -R aura
   echo "Plymouth theme set to 'aura', initramfs will be rebuilt"
 fi
-
-echo "✅ Plymouth boot splash configured"
-echo "   GDM will automatically handle smooth transition from Plymouth"

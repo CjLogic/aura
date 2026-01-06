@@ -1,25 +1,22 @@
 # Packages installed outside of install/packages.sh or optional packages
 # Utilized by ISO builder to ensure package availability in the ISO
 
-rustup
-gcc
-make
 autoconf-archive
 base
 base-devel
 broadcom-wl
 btrfs-progs
-cmake
-go
+#cmake
+#go
 dart
 dkms
 doxygen
 egl-wayland
-curl
+#curl
 git
 gst-plugin-pipewire
 gtk4-layer-shell
-htop
+#htop
 intltool
 iwd
 jdk-openjdk
@@ -31,12 +28,10 @@ limine
 limine-mkinitcpio-hook
 limine-snapper-sync
 linux
-linux-firmware
-linux-headers
-macbook12-spi-driver-dkms
-nvidia-dkms
-nvidia-open-dkms
-nvidia-utils
+#linux-firmware
+#linux-headers
+#macbook12-spi-driver-dkms
+#nvidia-utils
 lib32-nvidia-utils
 pipewire
 pipewire-alsa
@@ -46,8 +41,8 @@ qt6-wayland
 sassc
 snapper
 webp-pixbuf-loader
-wget
-yay-debug
+#wget
+#yay-debug
 zram-generator
 
 # T2 MacBook support packages (disabled - not needed)

@@ -2,17 +2,27 @@
 # Display welcome modal for first-time users
 
 # Welcome content
+# gum style \
+#     --foreground 14 --bold --border-foreground 11 --border rounded \
+#     --width 76 --margin "0 2" --padding "1 2" \
+#     "🎉 CONGRATULATIONS! Your AuraOS installation is Almost complete! click Yes at the bottom to Install Aura Components for full Aura experience 🎉"
 gum style \
-    --foreground 212 --border-foreground 212 --border double \
-    --align center --width 80 --margin "1 2" --padding "1 4" \
-    "Welcome to AuraOS!" \
-    "Beautiful Aesthetics Meets Powerful Dev Tools"
+    --border-foreground "#27F5B4" \
+    --foreground 14 \
+    --border double \
+    --align center \
+    --width 100 \
+    --margin "1 2" \
+    --padding "1 4" <<'EOF'
+    "🎉 CONGRATULATIONS! Your AuraOS installation is Almost complete! Continue to Install Aura Components for full Aura experience 🎉"
 
-echo
+        █████   ██    ██  ██████    █████
+       ██   ██  ██    ██  ██   ██  ██   ██
+       ███████  ██    ██  ██████   ███████
+       ██   ██  ██    ██  ██   ██  ██   ██
+       ██   ██   ██████   ██   ██  ██   ██
 
-gum style \
-    --foreground 14 --bold \
-    "🎉 CONGRATULATIONS! Your AuraOS installation is complete!"
+EOF
 
 echo
 
@@ -74,7 +84,7 @@ gum style \
     --foreground 15 --width 76 --margin "0 2" \
     "After install-aura-full completes:" \
     "  1. Log out (SUPER + SHIFT + Q or top menu)" \
-    "  2. Log back in at GDM" \
+    "  2. Log back in" \
     "  3. The full Aura shell will now be active!"
 
 echo
@@ -87,21 +97,43 @@ echo
 
 # Essential keybindings
 gum style \
-    --foreground 11 --border-foreground 11 --border rounded \
+    --foreground 10 --border-foreground 11 --border rounded \
     --width 76 --margin "0 2" --padding "1 2" \
     "Essential Keybindings"
 
 echo
 
 gum style \
-    --foreground 15 --width 76 --margin "0 2" \
-    "  SUPER + T        Open terminal" \
+    --foreground "#27F5B4" --width 76 --margin "0 2" \
+    "  SUPER + Return        Open terminal" \
+    "  SUPER + E        Open Files" \
     "  SUPER         Application launcher" \
     "  SUPER + Q             Close window" \
     "  SUPER + 1-9           Switch workspaces" \
-    "  SUPER + SHIFT + 1-9   Move window to workspace" \
-    "  SUPER + F             Toggle fullscreen" \
-    "  SUPER + V             Toggle floating"
+    "  SUPER + ALT + 1-9   Move window to workspace" \
+    "  SUPER + F             Toggle window fullscreen" \
+    "  SUPER + ALT + F             Toggle Bordered fullscreen" \
+     "  CTRL SUPER  ALT + R             Restart Shell" \
+     "  SUPER + K             Show Panels" \
+     "  SUPER + L             Lock Screen" \
+    "  SUPER + ALT + SPACE             Toggle floating"
+
+echo
+
+# Useful commands
+gum style \
+    --foreground 11 --border-foreground 11 --border rounded \
+    --width 76 --margin "0 2" --padding "1 2" \
+    "Useful Commands"
+
+echo
+
+gum style \
+    --foreground 15 --width 76 --margin "0 2" \
+    "  fastfetch       Display system information" \
+    "  btop            Interactive process viewer" \
+    "  lazygit         Terminal UI for git" \
+    "  lazydocker      Terminal UI for docker"
 
 echo
 
@@ -130,23 +162,6 @@ gum style \
 
 echo
 
-# Useful commands
-gum style \
-    --foreground 11 --border-foreground 11 --border rounded \
-    --width 76 --margin "0 2" --padding "1 2" \
-    "Useful Commands"
-
-echo
-
-gum style \
-    --foreground 15 --width 76 --margin "0 2" \
-    "  fastfetch       Display system information" \
-    "  btop            Interactive process viewer" \
-    "  lazygit         Terminal UI for git" \
-    "  lazydocker      Terminal UI for docker"
-
-echo
-
 # Support
 gum style \
     --foreground 243 --width 76 --margin "0 2" \
@@ -158,7 +173,7 @@ echo
 echo
 
 gum style \
-    --foreground 212 --bold --align center \
+    --foreground "#CEFDEE" --bold --align center \
     "Enjoy your beautiful new desktop environment! ✨"
 
 echo
@@ -178,7 +193,12 @@ gum style \
 echo
 
 # Use gum confirm for yes/no choice
-if gum confirm "Start installation now?" --affirmative "Yes, install now" --negative "No, I'll do it later"; then
+if gum confirm "Start installation now?" \
+    --affirmative "Yes, install now" \
+    --negative "No, I'll do it later" \
+    --selected.background "#27F5B4" \
+    --selected.foreground "#000000"; then
+
     echo
     gum style \
         --foreground 10 --bold --align center \
@@ -191,10 +211,10 @@ if gum confirm "Start installation now?" --affirmative "Yes, install now" --nega
     mkdir -p ~/.local/state/aura
     touch ~/.local/state/aura/welcome-shown
 
-    # Run install-aura-full
+    # Run install-aura-full with --noconfirm for streamlined installation
     if command -v install-aura-full &>/dev/null; then
         clear
-        install-aura-full
+        install-aura-full --noconfirm
     else
         echo
         gum style \

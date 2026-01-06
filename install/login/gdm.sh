@@ -9,11 +9,11 @@ sudo systemctl mask sddm.service 2>/dev/null || true
 
 # CRITICAL: Unmask plymouth-quit services to allow proper transition to GDM
 # If these are masked, Plymouth will hang and show a login prompt instead of GDM
-sudo systemctl unmask plymouth-quit.service 2>/dev/null || true
-sudo systemctl unmask plymouth-quit-wait.service 2>/dev/null || true
+# sudo systemctl unmask plymouth-quit.service 2>/dev/null || true
+# sudo systemctl unmask plymouth-quit-wait.service 2>/dev/null || true
 
 # Remove any custom plymouth-quit overrides that delay it
-sudo rm -f /etc/systemd/system/plymouth-quit.service.d/wait-for-graphical.conf 2>/dev/null || true
+# sudo rm -f /etc/systemd/system/plymouth-quit.service.d/wait-for-graphical.conf 2>/dev/null || true
 
 # Set default systemd target to graphical (required for GDM to auto-start)
 sudo ln -sf /usr/lib/systemd/system/graphical.target /etc/systemd/system/default.target
