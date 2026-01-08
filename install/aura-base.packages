@@ -61,6 +61,7 @@ mariadb-libs
 
 # === Dev Tools - Editors ===
 micro
+gimp
 
 # === Hyprland Desktop Environment ===
 hyprland
@@ -101,6 +102,7 @@ ttf-jetbrains-mono-nerd
 thunar
 gcc
 make
+pavucontrol
 
 
 # === Aura Shell Deps ===

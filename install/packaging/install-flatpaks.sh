@@ -35,6 +35,7 @@ if flatpak remotes 2>/dev/null | grep -q "flathub"; then
   echo "Installing flatpak applications..."
   sudo flatpak install -y flathub com.visualstudio.code 2>/dev/null || echo "⚠️  Failed to install VS Code (will be available for manual install)"
   sudo flatpak install -y flathub org.localsend.localsend_app 2>/dev/null || echo "⚠️  Failed to install LocalSend (will be available for manual install)"
+  sudo flatpak install -y flathub com.github.tchx84.Flatseal 2>/dev/null || echo "⚠️  Failed to install Flatseal (will be available for manual install)"
 else
   echo "⚠️  Flathub repository not available"
   echo "   Flatpak apps can be installed after first boot"

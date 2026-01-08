@@ -3,7 +3,7 @@
 aura-cmd-present "$EDITOR" || EDITOR=micro
 
 case "$EDITOR" in
-code | fresh | nano | micro | hx | helix)
+com.visualstudio.code | fresh | nano | micro | hx | helix)
   exec aura-launch-tui "$EDITOR" "$@"
   ;;
 *)
